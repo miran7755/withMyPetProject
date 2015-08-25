@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>signUpForm</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+	function init() {
+
+		var btDupchkObj = $("#btDupchk");
+		var idObj = $("input[name=id]");
+		var idValue = $(idObj).val();
+
+		var pwValue = $("input[name=pwd]").val();
+		var nameValue = $("input[name=name]").val();
+		var zipIdxValue = $("input[name=zip_idx]").val();
+		var addressValue = $("input[name=gender]").val();
+		var birthYearValue = $("select[name=birthYear]").val();
+		var birthMonthValue = $("select[name=birthMonth]").val();
+		var birthDayValue = $("select[name=birthDay]").val();
+
+		var submit = $("#submit");
+		submit.click(function() {
+			$.post("signup.do", "id=" + idValue, "pwd=" + pwValue, "name="
+					+ nameValue, "zip_idx=" + zipIdxValue, "gender="
+					+ genderValue, "birthYear=" + birthYearValue, "birthMonth="
+					+ birthMonthValue, "birthDay=" + birthDayValue, function(
+					resultData) {
+				divObj.html(resultData);
+			});
+		});
+
+		btDupchkObj.click(function() {
+			//name 속성이 id인 input 객체 찾기
+			//var idObj = document.querySelector("input[name=id]");
+
+			//input 태그는 value속성을 갖음. 객체 ,속성으로 사용
+			//var idValue = idObj.value;
+			//value 속성은 문자형
+			var idObj = $("input[name=id]");
+			var idValue = $(idObj).val();
+			if (idValue == '' || idValue.trim().length == 0) {
+				alert("아이디를 입력하세요.");
+				idObj.focus();
+			} else {
+				//window.open("idDupchk.jsp", '', 'width:300px');				
+				//var formObj = document.querySelector("form");
+				//var formObj = $("form");
+				var divObj = $("#divDupchk");
+				$.get("idDupchk.do", "id=" + idValue, function(resultData) {
+					divObj.html(resultData);
+				});
+				divObj.show();
+
+				/* formObj.action = "idDupchk.jsp";
+							formObj.submit();
+				 */
+				var divObj = $("#btDupchk ~ div");
+				divObj.style.display = "block";
+				//var divObj = document.querySelector("#btDupchk~ div");
+
+				var idChkText = $("#idChkText");
+				idChkText.style.display = "block";
+
+				/* var idChkText = document.querySelector("#idChkText");
+				idChkText.style.display = "block"; */
+			}
+		});
+
+		var btSearchzipObj = $("#btSearchzip");
+		btSearchzipObj.click(function() {
+			window.open('searchzip.html', '', 'width=1000, height=600');
+		});
+
+	}
+
+	$(document).ready(init);
+	//window.addEventListener("load", init);
+</script>
+</head>
+<body>
+	<div>
+		<form method="post" action="signup.do">
+			<table>
+				<tr>
+					<td>ID</td>
+					<td><input name="id" maxlength="10" size="30" required>
+						<button id="btDupchk" type="button">중복확인</button>
+						<div id="divDupchk" style="display: none;">
+
+							<!-- 	<iframe name="dupchkIframe"></iframe> -->
+
+						</div></td>
+
+				</tr>
+
+				<tr>
+					<td>PASSWORD</td>
+					<td><input type="password" name="pwd" required></td>
+				<tr>
+					<td>NAME</td>
+					<td><input type="text" name="name"></td>
+				</tr>
+				<tr>
+
+					<td>우편번호</td>
+					<td><span style="color: red" id="spanSearchzipcode"></span>
+						<button id="btSearchzip" type="button">우편번호 검색</button> <input
+						type="hidden" name="zip_idx">
+						<div id="divSearchzip" style="display: none"></div></td>
+				</tr>
+				<!-- <tr>
+					<td>ZIP_IDX</td>
+					<td><input type="text" name="zip_idx"></td>
+				</tr> -->
+				<tr>
+					<td>ADDRESS</td>
+					<td><input type="text" name="address"></td>
+				</tr>
+				<tr>
+					<td>GENDER</td>
+					<td><input type="radio" name="gender" value="M">남&nbsp;&nbsp;
+						<input type="radio" name="gender" value="F">여</td>
+				</tr>
+				<tr>
+					<td>BIRTH_DATE</td>
+					<td><select name="birthYear">
+							<option>1999
+							<option>1998
+							<option>1997
+							<option>1996
+							<option>1995
+							<option>1994
+							<option>1993
+							<option>1992
+							<option>1991
+							<option>1990
+							<option>1989
+							<option>1988
+							<option>1987
+							<option>1986
+							<option>1985
+							<option>1984
+							<option>1983
+							<option>1982
+							<option>1981
+							<option>1980
+					</select> <select name="birthMonth">
+
+							<option>01
+							<option>02
+							<option>03
+							<option>04
+							<option>05
+							<option>06
+							<option>07
+							<option>08
+							<option>09
+							<option>10
+							<option>11
+							<option>12
+					</select> <select name="birthDay">
+
+							<option>01
+							<option>02
+							<option>03
+							<option>04
+							<option>05
+							<option>06
+							<option>07
+							<option>08
+							<option>09
+							<option>10
+							<option>11
+							<option>12
+							<option>13
+							<option>14
+							<option>15
+							<option>16
+							<option>17
+							<option>18
+							<option>19
+							<option>20
+							<option>21
+							<option>22
+							<option>23
+							<option>24
+							<option>25
+							<option>26
+							<option>27
+							<option>28
+							<option>29
+							<option>30
+					</select></td>
+				</tr>
+				<tr>
+					<td>Date Picker</td>
+					<td><input type="date"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="고객가입"></td>
+				</tr>
+
+			</table>
+
+
+		</form>
+	</div>
+</body>
+</html>
