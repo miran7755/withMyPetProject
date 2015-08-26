@@ -1,20 +1,22 @@
 package vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Post {
-	
+
 	private int post_no;
 	private String subject;
-	//private String e_mail;
+	// private String e_mail;
 	private Member member;
 	private String msg;
 	private int hate_count;
 	private int like_count;
 	private Date post_date;
 	private char tb_flag;
+	private List<Media_tag> list;
 
-	public Post(){
+	public Post() {
 
 	}
 
@@ -158,9 +160,5 @@ public class Post {
 		this.post_date = post_date;
 		this.tb_flag = tb_flag;
 	}
-
-	
-
-
 
 }

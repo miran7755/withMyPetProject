@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardMapper">
+	<!-- <resultMap id="resultOrderLine" type="com.my.vo.OrderLine">
+		<result column="order_info_no" property="order_no" />
+		<result column="order_line_no" property="order_line_no" />
+		<result column="quantity" property="quantity" />
+		<association property="product" resultMap="ProductMapper.p"/>
+		<association property="product" javaType="com.my.vo.Product">
+			<result column="prod_no" property="prod_no" />
+			<result column="prod_name" property="prod_name" />
+			<result column="prod_price" property="prod_price" />
+		</association>
+	</resultMap>
+	<resultMap id="resultOrderInfo" type="com.my.vo.OrderInfo">
+		<result column="order_no" property="order_no" />
+		<result column="order_time" property="order_time" />
+		<association property="customer" javaType="Customer">
+			<result column="order_id" property="id" />
+			<result column="name" property="name" />
+			<result column="password" property="password" />
+		</association>
+		<collection property="lines" column="order_line_no" resultMap="resultOrderLine" />
+	</resultMap>
+ -->
+
+	<insert id="insertAll">
+		INSERT INTO post(post_no, subject, e_mail, msg, tb_flag) 
+		VALUES ( order_seq.NEXTVAL, #{subject}, #{member.e_mail}, #{msg}, #{tb_flag})
+	</insert>
+	<insert id="insertLINE" >		
+		INSERT INTO order_line(order_info_no, order_line_no, order_prod_no, quantity)
+		VALUES(order_seq.CURRVAL, #{order_line_no}, #{product.prod_no}, #{quantity})			
+	</insert>
+	
+	<!--주문자ID로 주문상세내역조회 -->
+	<select id="selectById" resultMap="resultOrderInfo">
+		SELECT order_no, order_id, order_time,
+		order_line_no, quantity,
+		prod_no, prod_name, prod_price
+		FROM order_info info
+		JOIN order_line line ON info.order_no = line.order_info_no
+		JOIN product p ON p.prod_no = line.order_prod_no
+		WHERE order_id=#{id}
+		ORDER BY order_no DESC, order_line_no ASC
+	</select>
+	<!--주문번호로 주문상세내역조회 -->
+	<select id="selectByInfoNo" resultMap="resultOrderLine">
+		SELECT order_info_no, order_line_no, quantity,
+		prod_no, prod_name, prod_price
+		FROM order_line line
+		JOIN product p ON p.prod_no = line.order_prod_no
+		WHERE order_info_no=#{no}
+		ORDER BY order_line_no ASC
+	</select>
+</mapper>

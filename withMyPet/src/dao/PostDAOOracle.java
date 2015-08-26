@@ -19,8 +19,9 @@ public class PostDAOOracle implements PostDAO {
 	
 	@Override
 	@Transactional
-	public void insertAll(Post post, ArrayList<Media_tag> media_tag) throws AddException{
+	public void insertAll(Post post, Media_tag media_tag) throws AddException{
 		session.insert("BoardMapper.insertAll", post);
+		
 		session.insert("BoardMapper.insertMedia", media_tag);
 		
 	}
