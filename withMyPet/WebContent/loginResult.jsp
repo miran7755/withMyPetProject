@@ -8,8 +8,8 @@
 <title>signupResult.jsp</title>
 <script>
 window.alert('${requestScope.msg}');
-//location.href="list.do";
-location.href='${pageContext.request.contextPath}'; <%--/web12경로로 리다이렉션 설정 --%>
+//location.href="/main.jsp";
+location.href='${pageContext.request.contextPath}/main.jsp'; <%--/web12경로로 리다이렉션 설정 --%>
                                            <%--/web12의 welcome file페이지로 이동 --%>
 </script>
 </head>
