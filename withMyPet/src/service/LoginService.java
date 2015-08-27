@@ -21,7 +21,7 @@ public class LoginService {
 		Member m = dao.selectByEmail(email);
 		System.out.println("service : " + m);
 		if( m ==null || !m.getPassword().equals(password)){
-			throw new Exception("로그인 실패");
+			throw new Exception("로그인 실패");			
 		}else{
 			System.out.println("로그인 성공");
 		}

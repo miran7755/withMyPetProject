@@ -28,6 +28,12 @@
 	</select>
 	
 	<!-- 로그아웃 -->
+	
+	<!-- 회원가입 -->
+	<insert id="insert">
+	INSERT INTO customer(e_mail, nickname, password) 
+	VALUES(#{e_mail}, #{nickname}, #{password})
+	</insert>
  
   
 </mapper>

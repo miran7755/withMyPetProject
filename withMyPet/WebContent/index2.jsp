@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +32,9 @@
 	href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic" />
 <!-- Facebook app 연결요청  -->
 <script>
+
+<c:if test="${!empty msg}">alert('${msg}')</c:if>
+
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId : '697333240402235',
@@ -114,6 +118,8 @@
         });
     }
 	
+	
+	
 </script>
 
 </head>
@@ -188,10 +194,10 @@
 							<h3 class="form-title text-center"></h3>
 							<form class="form-header"
 								action="login.do"
-								role="form" method="POST" id="#">
+								role="form" method="POST" id="login">
 								<div class="form-group">
 									<input class="form-control input-lg" name="em" id="email"
-										type="text" placeholder="Your Email address" required>
+										type="email" placeholder="Your Email address" required>
 								</div>
 								<div class="form-group">
 									<input class="form-control input-lg" name="pw"
@@ -216,21 +222,24 @@
 							</form>
 						</div>
 						<div class="signup-header wow fadeInUp">
-							<h3 class="form-title text-center">ì²ìì´ì¸ì ?
-								ê°í¸ê°ìíê¸°</h3>
-							<form class="form-header" action="íìê°ì " role="form"
-								method="POST" id="#">
+							<h3 class="form-title text-center"> 간편 가입하기 </h3>
+							<form class="form-header" action="signup.do" role="form"
+								method="POST" id="signup">
 								<div class="form-group">
-									<input class="form-control input-lg" name="MERGE1" id="email"
-										type="text" placeholder="Your Email address" required>
+									<input class="form-control input-lg" name="n_email" id="email"
+										type="email" placeholder="Your Email address" required>
 								</div>
 								<div class="form-group">
-									<input class="form-control input-lg" name="MERGE0"
-										id="password" type="email" placeholder="Password" required>
+									<input class="form-control input-lg" name="n_nickname" id="nickname"
+										type="text" placeholder="Your nickname" required>
+								</div>
+								<div class="form-group">
+									<input class="form-control input-lg" name="n_pwd"
+										id="password" type="password" placeholder="Password" required>
 								</div>
 								<div class="form-group last">
 									<input type="submit" class="btn btn-warning btn-block btn-lg"
-										value="íìê°ì ">
+										value="가입하기">
 								</div>
 								<p class="privacy text-center">
 									We will not share your email. Read our <a href="privacy.html">privacy

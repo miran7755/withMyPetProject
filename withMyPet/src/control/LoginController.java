@@ -38,26 +38,28 @@ public class LoginController{
 		/*String id = request.getParameter("id");
 		String password = request.getParameter("pwd");*/
 
-		String msg ="로그인 성공";
-		//session = request.getSession();
+		String msg = "로그인 성공";
+		// session = request.getSession();
 		session.removeAttribute("loginInfo");
-	
+
 		try {
-			System.out.println("###### try");
-			service.login(email, password);	
-			Member m = dao.selectByEmail(email);
-			System.out.println("member......: " + m);
-			session.setAttribute("loginInfo", m);			
+		// System.out.println("###### try");
+		service.login(email, password);
+		Member m = dao.selectByEmail(email);
+		System.out.println("member......: " + m);
+		session.setAttribute("loginInfo", m);
+
 		} catch (Exception e) {
-			e.printStackTrace();
-			msg = e.getMessage();
+		e.printStackTrace();
+		msg = e.getMessage();
+
 		}
 
 		mav.addObject("msg", msg);
 		String url = "/loginResult.jsp";
 		mav.setViewName(url);
-		
 		return mav;
+
 	}
 
 }

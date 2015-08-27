@@ -18,6 +18,22 @@ public class MemberDAOOracle implements MemberDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+
+	@Override
+	public Member selectByEmail(String email) {
+		Member m = session.selectOne("MemberMapper.selectByEmail", email);
+		return m;
+	}
+
+
+
+	@Override
+	public void insert(Member m) {
+		session.insert("MemberMapper.insert", m);
+		
+	}
+
 
 	
 
@@ -34,12 +50,6 @@ public class MemberDAOOracle implements MemberDAO {
 	}
 
 
-
-	@Override
-	public Member selectByEmail(String email) {
-		Member m = session.selectOne("MemberMapper.selectByEmail", email);
-		return m;
-	}
 
 	
 }
