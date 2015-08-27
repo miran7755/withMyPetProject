@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,10 +29,110 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic" />
+<!-- Facebook app 연결요청  -->
+<script>
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId : '697333240402235',
+			xfbml : true,
+			cookie : true,
+			
+			version : 'v2.4'
+		});
+
+		FB.getLoginStatus(function(response) {
+			if (response.status === 'connected') {
+				FB.api('/me', function(user) {
+					if (user) {
+						var image = document.getElementById('image');
+						image.src = 'http://graph.facebook.com/' + user.id
+								+ '/picture';
+						var name = document.getElementById('name');
+						name.innerHTML = user.name
+						var id = document.getElementById('id');
+						console.log(user.id);
+						id.innerHTML = user.id
+					}
+				});
+
+			} else if (response.status === 'not_authorized') {
+
+			} else {
+
+			}
+		});
+
+		FB.Event.subscribe('auth.login', function(response) {
+			document.location.reload();
+		});
+	};
+
+
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {
+			return;
+		}
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	
+
+	function signinCallback(authResult) {
+		  if (authResult['access_token']) {
+		    // 승인 성공
+		    // 사용자가 승인되었으므로 로그인 버튼 숨김. 예:
+		    document.getElementById('signinButton').setAttribute('style', 'display: none');
+		  } else if (authResult['error']) {
+		    // 오류가 발생했습니다.
+		    // 가능한 오류 코드:
+		    //   "access_denied" - 사용자가 앱에 대한 액세스 거부
+		    //   "immediate_failed" - 사용자가 자동으로 로그인할 수 없음
+		    // console.log('오류 발생: ' + authResult['error']);
+		  }
+		}
+	
+	(function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/ko_KR/all.js";
+        ref.parentNode.insertBefore(js, ref);
+      }(document));
+	
+	
+	function showUserInfo(id) {
+        FB.api({
+          method: 'fql.query',
+          query: 'SELECT name, pic_square FROM user WHERE uid='+id
+        },function(response) {
+          document.getElementById('userInfo').innerHTML += (
+            '<img src="' + response[0].pic_square + '"> ' + response[0].name
+          );
+        });
+    }
+	
+</script>
 
 </head>
 
 <body data-spy="scroll" data-target="#navbar-scroll">
+
+	<!--  Facebook SDK -->
+	<div id="fb-root"></div>
+	<script>
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.4&appId=697333240402235";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
 
 	<!-- /.preloader -->
 	<div id="preloader"></div>
@@ -68,7 +170,14 @@
 						<a href="#download" class="btn-default">Download</a>
 					</div> -->
 
-
+						<p>사용자정보 출력</p>
+						<div align="left">
+						 	<img id="image" />
+							<div id="name"></div>
+							<div id="id"></div>
+							<div id="email"></div>
+							<div id="name"></div>
+						</div>
 
 					</div>
 
@@ -78,26 +187,38 @@
 						<div class="signup-header wow fadeInUp">
 							<h3 class="form-title text-center"></h3>
 							<form class="form-header"
-								action="http://moxdesign.us10.list-manage.com/subscribe/post"
+								action="login.do"
 								role="form" method="POST" id="#">
 								<div class="form-group">
-									<input class="form-control input-lg" name="MERGE1" id="email"
+									<input class="form-control input-lg" name="em" id="email"
 										type="text" placeholder="Your Email address" required>
 								</div>
 								<div class="form-group">
-									<input class="form-control input-lg" name="MERGE0"
-										id="password" type="email" placeholder="Password" required>
+									<input class="form-control input-lg" name="pw"
+										id="password" type="password" placeholder="Password" required>
 								</div>
 								<div class="form-group last">
 									<input type="submit" class="btn btn-warning btn-block btn-lg"
 										value="Login">
 								</div>
+								<div class="fb-login-button" data-max-rows="1" data-size="large"
+									data-show-faces="false" data-auto-logout-link="true"></div>
+								<div>
+									<span id="signinButton"> <span class="g-signin"
+										data-callback="signinCallback" data-clientid="536877613212-vlu39lhu8sp87lvd83npe0ejm3df7kah.apps.googleusercontent.com"
+										data-cookiepolicy="single_host_origin"
+										data-requestvisibleactions="http://schemas.google.com/AddActivity"
+										data-scope="https://www.googleapis.com/auth/plus.login">
+									</span>
+									</span>
+								</div>
 								<p class="privacy text-center"></p>
 							</form>
 						</div>
 						<div class="signup-header wow fadeInUp">
-							<h3 class="form-title text-center">처음이세요 ? 간편가입하기</h3>
-							<form class="form-header" action="회원가입 " role="form"
+							<h3 class="form-title text-center">ì²ìì´ì¸ì ?
+								ê°í¸ê°ìíê¸°</h3>
+							<form class="form-header" action="íìê°ì " role="form"
 								method="POST" id="#">
 								<div class="form-group">
 									<input class="form-control input-lg" name="MERGE1" id="email"
@@ -109,7 +230,7 @@
 								</div>
 								<div class="form-group last">
 									<input type="submit" class="btn btn-warning btn-block btn-lg"
-										value="회원가입 ">
+										value="íìê°ì ">
 								</div>
 								<p class="privacy text-center">
 									We will not share your email. Read our <a href="privacy.html">privacy
@@ -205,7 +326,62 @@
 	<script src="js/wow.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script>
-	 	new WOW().init(); 
+		new WOW().init();
 	</script>
+	<!-- 구글 연동  -->
+	<!-- 이 비동기 자바스크립트를 </body> 태그 앞에 배치 -->
+  <script type="text/javascript">
+  (function() {
+    var po = document.createElement('script');
+    po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/client:plusone.js?onload=render';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(po, s);
+  })();
+
+  function render() {
+    gapi.signin.render('customBtn', {
+      //'callback': 'signinCallback',
+      'clientid': '841077041629.apps.googleusercontent.com',
+      'cookiepolicy': 'single_host_origin',
+      'requestvisibleactions': 'http://schemas.google.com/AddActivity',
+      'scope': 'https://www.googleapis.com/auth/plus.login'
+    });
+  }
+  </script>
+  <style type="text/css">
+    #customBtn {
+      display: inline-block;
+      background: #cc3732;
+      color: white;
+      width: 175px;
+      border-radius: 5px;
+    }
+    #customBtn:hover {
+      background: #e74b37;
+      cursor: hand;
+    }
+    span.label {
+      font-weight: bold;
+    }
+    span.icon {
+      background: url('/+/images/branding/btn_red_32.png') transparent 10px 50% no-repeat;
+      display: inline-block;
+      vertical-align: middle;
+      width: 40px;
+      height: 40px;
+    }
+    span.buttonText {
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  </style>
+  <span class="label">Sign in with:</span>
+  <div id="customBtn" class="customGPlusSignIn">
+    <span class="icon"></span>
+    <span class="buttonText">Google</span>
+  </div>
 </body>
 </html>
