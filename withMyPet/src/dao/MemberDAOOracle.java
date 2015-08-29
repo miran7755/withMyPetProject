@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import exception.AddException;
 import vo.Member;
 @Repository("MemberDAO")
 public class MemberDAOOracle implements MemberDAO {
@@ -25,24 +26,16 @@ public class MemberDAOOracle implements MemberDAO {
 		Member m = session.selectOne("MemberMapper.selectByEmail", email);
 		return m;
 	}
-
-
-
 	@Override
-	public void insert(Member m) {
-		session.insert("MemberMapper.insert", m);
+	public void insert(Member m) throws AddException{
+		session.insert("MemberMapper.insert",m);
 		
 	}
-
-
-	
-
 	@Override
 	public void update(String email) {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void delete(String email) {
 		// TODO Auto-generated method stub

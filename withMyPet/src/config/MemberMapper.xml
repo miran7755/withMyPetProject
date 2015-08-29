@@ -31,7 +31,7 @@
 	
 	<!-- 회원가입 -->
 	<insert id="insert">
-	INSERT INTO customer(e_mail, nickname, password) 
+	INSERT INTO member(e_mail, nickname, password) 
 	VALUES(#{e_mail}, #{nickname}, #{password})
 	</insert>
  
