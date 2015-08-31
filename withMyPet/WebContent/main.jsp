@@ -42,7 +42,7 @@ window.fbAsyncInit = function() {
 	});
 FB.getLoginStatus(function(response) {
 	if (response.status === 'connected') {
-		alert("LoginStatus -------");
+		//alert("LoginStatus -------");
 		FB.api('/me?fields=id,name,email', function(user) {
 			if (user) {
 				var image = document.getElementById('image');
@@ -78,11 +78,74 @@ FB.getLoginStatus(function(response) {
 }, {
 	scope : 'email'
 });
+(function(d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0];
+	if (d.getElementById(id)) {
+		return;
+	}
+	js = d.createElement(s);
+	js.id = id;
+	js.src = "//connect.facebook.net/en_US/sdk.js";
+	fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+function signinCallback(authResult) {
+	if (authResult['access_token']) {
+		// 승인 성공
+		// 사용자가 승인되었으므로 로그인 버튼 숨김. 예:
+		//document.getElementById('signinButton').setAttribute('style',
+		//			'display: none');
+	} else if (authResult['error']) {
+		// 오류가 발생했습니다.
+		// 가능한 오류 코드:
+		//   "access_denied" - 사용자가 앱에 대한 액세스 거부
+		//   "immediate_failed" - 사용자가 자동으로 로그인할 수 없음
+		// console.log('오류 발생: ' + authResult['error']);
+	}
+}
+
+(function(d) {
+	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	if (d.getElementById(id)) {
+		return;
+	}
+	js = d.createElement('script');
+	js.id = id;
+	js.async = true;
+	js.src = "//connect.facebook.net/ko_KR/all.js";
+	ref.parentNode.insertBefore(js, ref);
+}(document));
+
+function showUserInfo(id) {
+	FB
+			.api(
+					{
+						method : 'fql.query',
+						query : 'SELECT name, pic_square FROM user WHERE uid='
+								+ id
+					},
+					function(response) {
+						document.getElementById('userInfo').innerHTML += ('<img src="' + response[0].pic_square + '"> ' + response[0].name);
+
+					});
+}
+
 };
 </script>
 
 <body data-spy="scroll" data-target="#navbar-scroll">
-
+<div id="fb-root"></div>
+	<script>
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.4&appId=697333240402235";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
 	<!-- /.preloader -->
 	<div id="preloader"></div>
 	<div id="top"></div>
@@ -133,6 +196,15 @@ FB.getLoginStatus(function(response) {
 
 			<div class="blog-post">
 				<h2 class="blog-post-title">Timeline 노출되는 부분</h2>
+				<p>사용자정보 출력</p>
+						<div align="left">
+							<img id="image" />
+							<div id="name"></div>
+							<div id="id"></div>
+							<div id="email"></div>
+							<!-- <div id="birthday"></div> -->
+
+						</div>
 			</div>
 		</div>
 		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
