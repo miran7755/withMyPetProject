@@ -31,6 +31,55 @@
 	href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic" />
 
 </head>
+<script>
+window.fbAsyncInit = function() {
+	FB.init({
+		appId : '697333240402235',
+		xfbml : true,
+		cookie : true,
+
+		version : 'v2.4'
+	});
+FB.getLoginStatus(function(response) {
+	if (response.status === 'connected') {
+		alert("LoginStatus -------");
+		FB.api('/me?fields=id,name,email', function(user) {
+			if (user) {
+				var image = document.getElementById('image');
+				image.src = 'http://graph.facebook.com/' + user.id
+						+ '/picture';
+				var name = document.getElementById('name');
+				name.innerHTML = user.name
+				var id = document.getElementById('id');
+				console.log(user.id);
+				id.innerHTML = user.id;
+				var email = document.getElementById('email');
+				//var birthday = document.getElementById('birthday');
+				console.log(user.email);
+				//console.log(user.birthday);
+				email.innerHTML = user.email;
+				//birthday.innerHTML = user.birthday;
+				
+				
+				
+				   $.post("signup.do", {
+					"n_email" : user.email,
+					"n_nickname" : user.name,
+					"n_pwd" : "fb" }
+				 );
+				console.log("email **** : " + user.email + " nickname ***  : " + user.name ); 
+			}
+
+		});  
+
+	} else if (response.status === 'not_authorized') {
+
+	}
+}, {
+	scope : 'email'
+});
+};
+</script>
 
 <body data-spy="scroll" data-target="#navbar-scroll">
 

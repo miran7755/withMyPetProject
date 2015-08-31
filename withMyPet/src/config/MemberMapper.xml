@@ -16,12 +16,6 @@
 	</resultMap> -->
 
 		
-	<!-- 회원가입  -->
-	<!-- <insert id="insert">
-	INSERT INTO customer(id, password, name, zip_idx, address, gender, birth_date) 
-	VALUES(#{id}, #{password}, #{name}, #{zip.idx}, #{address}, #{gender}, #{birth_date})
-	</insert> -->
-	
 	<!-- 로그인  -->
 	<select id="selectByEmail" resultType="vo.Member">
 	SELECT * FROM member WHERE e_mail = #{email}

@@ -19,6 +19,39 @@
 .show {
 	display: block;
 }
+
+#customBtn {
+	display: inline-block;
+	background: #cc3732;
+	color: white;
+	width: 175px;
+	border-radius: 5px;
+}
+
+#customBtn:hover {
+	background: #e74b37;
+	cursor: hand;
+}
+
+span.label {
+	font-weight: bold;
+}
+
+span.icon {
+	background: url('/+/images/branding/btn_red_32.png') transparent 10px
+		50% no-repeat;
+	display: inline-block;
+	vertical-align: middle;
+	width: 40px;
+	height: 40px;
+}
+
+span.buttonText {
+	display: inline-block;
+	vertical-align: middle;
+	padding-left: 40px;
+	padding-right: 40px;
+}
 </style>
 <!-- CSS Files -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -55,7 +88,8 @@
 
 		FB.getLoginStatus(function(response) {
 			if (response.status === 'connected') {
-				FB.api('/me?fields=id,name,email,birthday', function(user) {
+				alert("LoginStatus -------");
+				FB.api('/me?fields=id,name,email', function(user) {
 					if (user) {
 						var image = document.getElementById('image');
 						image.src = 'http://graph.facebook.com/' + user.id
@@ -66,40 +100,39 @@
 						console.log(user.id);
 						id.innerHTML = user.id;
 						var email = document.getElementById('email');
-						var birthday = document.getElementById('birthday');
+						//var birthday = document.getElementById('birthday');
 						console.log(user.email);
-						console.log(user.birthday);
+						//console.log(user.birthday);
 						email.innerHTML = user.email;
-						birthday.innerHTML = user.birthday;
+						//birthday.innerHTML = user.birthday;
 						
 						
 						
-						$.post("signup.do", {
-							"n_email" : email,
-							"n_nickname" : name,
-							"n_pwd=" : "fb"
-						}, function(resultData) {
-							//divObj.html(resultData);
-							//console.log("email="+email + "nickname="+name);
-							alert("회원 가입 작동");
-						});
+						  /* $.post("signup.do", {
+							"n_email" : user.email,
+							"n_nickname" : user.name,
+							"n_pwd" : "fb" }
+						 );
+						console.log("email **** : " + user.email + " nickname ***  : " + user.name ); */
 					}
 
-				});
+				});  
 
 			} else if (response.status === 'not_authorized') {
 
 			}
 		}, {
-			scope : 'email,birthday'
+			scope : 'email'
 		});
 
 		FB.Event.subscribe('auth.login', function(response) {
 			//document.location.reload();
 			//로그인 하고서 main.jsp 연결
 			if (response.status === 'connected') {
+				alert("event.subscribe");				
 				document.location.assign("main.jsp");
-			}
+		
+ 			}
 
 		});
 	};
@@ -221,7 +254,7 @@
 							<div id="name"></div>
 							<div id="id"></div>
 							<div id="email"></div>
-							<div id="birthday"></div>
+							<!-- <div id="birthday"></div> -->
 
 						</div>
 
@@ -247,7 +280,7 @@
 										value="Login">
 								</div>
 								<div class="fb-login-button" data-max-rows="1" data-size="large"
-									data-show-faces="false" data-auto-logout-link="true"></div>
+									data-show-faces="false" data-auto-logout-link="true" scope = 'email,user_friends, public_profile'></div>
 								<div>
 									<%--<a id="kakao-login-btn"></a> --%>
 
@@ -277,7 +310,7 @@
 						</div>
 						<div class="signup-header wow fadeInUp">
 							<h3 class="form-title text-center">간편 가입하기</h3>
-							<form class="form-header2" action="signup.do" role="form"
+							<form class="form-header" action="signup.do" role="form"
 								method="POST" id="signup">
 								<div class="form-group">
 									<input class="form-control input-lg" name="n_email" id="email"
@@ -295,18 +328,17 @@
 									<input type="submit" class="btn btn-warning btn-block btn-lg"
 										id="signupBtn" value="가입하기">
 								</div>
-								<p>OR</p>
-								<!-- <a class="btn btn-block btn-social btn-facebook"> <i
+								<!-- <p>OR</p>
+								<a class="btn btn-block btn-social btn-facebook"> <i
 									class="fb-signin-button"></i> Sign in Facebook
-								</a> -->
-								<!-- <div class="form-group last">
+								</a>
+								<div class="form-group last">
 								<input type="button" class="fb-signin-button"
 										id="signupBtnfb" value="페이스북으로 가입하기">
-								 -->
+								
 								<div class="fb-login-button" data-max-rows="1"
-									data-size="xlarge" data-show-faces="false"
-									data-auto-logout-link="true"></div>
-						</div>
+									data-size="large" data-show-faces="false"
+									data-auto-logout-link="true"></div> -->
 
 
 						<p class="privacy text-center">
@@ -526,46 +558,15 @@
 				el.setAttribute('class', 'hide');
 			}
 		}
+		
+
 	</script>
-	<style type="text/css">
-#customBtn {
-	display: inline-block;
-	background: #cc3732;
-	color: white;
-	width: 175px;
-	border-radius: 5px;
-}
 
-#customBtn:hover {
-	background: #e74b37;
-	cursor: hand;
-}
-
-span.label {
-	font-weight: bold;
-}
-
-span.icon {
-	background: url('/+/images/branding/btn_red_32.png') transparent 10px
-		50% no-repeat;
-	display: inline-block;
-	vertical-align: middle;
-	width: 40px;
-	height: 40px;
-}
-
-span.buttonText {
-	display: inline-block;
-	vertical-align: middle;
-	padding-left: 40px;
-	padding-right: 40px;
-}
-</style>
-	<span class="label">Sign in with:</span>
+<!-- 	<span class="label">Sign in with:</span>
 	<div id="customBtn" class="customGPlusSignIn">
 		<span class="icon"></span> <span class="buttonText">Google</span>
 	</div>
-
+ -->
 	<%--KaKaoTalk 로그인 연동 --%>
 	<%--<script>
 
