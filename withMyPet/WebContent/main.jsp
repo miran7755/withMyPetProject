@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="loginInfo" value="${sessionScope.loginInfo}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +61,6 @@ FB.getLoginStatus(function(response) {
 				//console.log(user.birthday);
 				email.innerHTML = user.email;
 				//birthday.innerHTML = user.birthday;
-				
 				
 				
 				   $.post("signup.do", {
@@ -175,6 +176,10 @@ function showUserInfo(id) {
 					</ul>
 				</div>
 				<ul class="nav navbar-nav navbar-right">
+					<li> <img id="image"></li>
+					<li> <i id="name"></i>
+					<li> <div id="email"></div>
+					<li> <i>${sessionScope.loginInfo.e_mail}</i>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">회원정보 <span class="caret"></span></a>
@@ -217,20 +222,11 @@ function showUserInfo(id) {
 				</p>
 			</div>
 			<div class="sidebar-module">
-				<h4>Archives</h4>
+				<h4>Friends List</h4>
 				<ol class="list-unstyled">
-					<li><a href="#">March 2014</a></li>
-					<li><a href="#">February 2014</a></li>
-					<li><a href="#">January 2014</a></li>
-					<li><a href="#">December 2013</a></li>
-					<li><a href="#">November 2013</a></li>
-					<li><a href="#">October 2013</a></li>
-					<li><a href="#">September 2013</a></li>
-					<li><a href="#">August 2013</a></li>
-					<li><a href="#">July 2013</a></li>
-					<li><a href="#">June 2013</a></li>
-					<li><a href="#">May 2013</a></li>
-					<li><a href="#">April 2013</a></li>
+					<li><a href="#">Noh heeseok</a></li>
+					<li><a href="#">Pack gyerae</a></li>
+					
 				</ol>
 			</div>
 			<div class="sidebar-module">
