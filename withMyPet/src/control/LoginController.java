@@ -31,7 +31,7 @@ public class LoginController{
 								@RequestParam("pw") String password,
 								HttpSession session  ){
 		ModelAndView mav = new ModelAndView();
-		System.out.println("작동");
+		//System.out.println("작동");
 		//Model : request에 저장될 attribute
 		//view : viewer용 jsp
 		

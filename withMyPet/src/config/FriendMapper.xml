@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FriendMapper">
+
+
+		
+	<!-- 친구 찾기  -->
+	<select id="selectFriend" resultType="vo.Member">
+	SELECT * FROM friend_list WHERE e_mail = #{email}
+	</select>
+
+	<!-- 친구 추가  -->
+	<insert id="insert">
+	INSERT INTO member(e_mail, nickname, password) 
+	VALUES(#{e_mail}, #{nickname}, #{password})
+	</insert>
+ 
+  
+</mapper>
