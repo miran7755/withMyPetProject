@@ -5,9 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script
+src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <!-- /.website title -->
-<title>Backyard Landing Page</title>
+<title>With My Pet</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -42,6 +44,7 @@ window.fbAsyncInit = function() {
 
 		version : 'v2.4'
 	});
+	var email = document.getElementById('email');
 FB.getLoginStatus(function(response) {
 	if (response.status === 'connected') {
 		//alert("LoginStatus -------");
@@ -55,10 +58,11 @@ FB.getLoginStatus(function(response) {
 				var id = document.getElementById('id');
 				console.log(user.id);
 				id.innerHTML = user.id;
-				var email = document.getElementById('email');
+				//var email = document.getElementById('email');
 				//var birthday = document.getElementById('birthday');
 				console.log(user.email);
 				//console.log(user.birthday);
+				//email=user.email;
 				email.innerHTML = user.email;
 				//birthday.innerHTML = user.birthday;
 				
@@ -132,6 +136,17 @@ function showUserInfo(id) {
 }
 
 };
+
+$(document).ready(function() {
+	//alert("test");
+	var emailVal=$("#email").html();
+	console.log("email="+emailVal);
+	$.get("friendlist.do", "email=" + emailVal , function(resultData) {
+	$("#friemdlist").html(resultData);
+	});
+});
+
+
 </script>
 
 <body data-spy="scroll" data-target="#navbar-scroll">
@@ -170,21 +185,22 @@ function showUserInfo(id) {
 				<div id="navbar-scroll"
 					class="collapse navbar-collapse navbar-backyard navbar-left">
 					<ul class="nav navbar-nav">
-						<li><a href="#intro">지식in</a></li>
-						<li><a href="#feature">지식in</a></li>
-						<li><a href="#download">지식in</a></li>
+						<li><a href="#intro"></a></li>
+						<li><a href="boardlistview.do">지식in</a></li>
+						<li><a href="#download"></a></li>
 					</ul>
 				</div>
 				<ul class="nav navbar-nav navbar-right">
 					<li> <img id="image"></li>
-					<li> <i id="name"></i>
-					<li> <div id="email"></div>
+					<li> <div id="id"></div></li>
+					<li> <div id="name"></div></li>
+					<li> <div id="email"></div></li>
 					<li> <i>${sessionScope.loginInfo.e_mail}</i>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">회원정보 <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Pet등록</a></li>
+						<ul class="dropdown-menu" id="friendlist">
+							<li><a href="AddPet.jsp">Pet등록</a></li>
 							<li><a href="#">회원정보 수정</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="#">Logout</a></li>
@@ -195,21 +211,19 @@ function showUserInfo(id) {
 	</div>
 
 
-	<div class="row">
-
+	<div id="article" class="row">
 		<div class="col-sm-8 blog-main">
-
 			<div class="blog-post">
 				<h2 class="blog-post-title">Timeline 노출되는 부분</h2>
-				<p>사용자정보 출력</p>
+				  <p>사용자정보 출력</p>
 						<div align="left">
 							<img id="image" />
 							<div id="name"></div>
 							<div id="id"></div>
 							<div id="email"></div>
-							<!-- <div id="birthday"></div> -->
+							<div id="birthday"></div>
 
-						</div>
+						</div>  
 			</div>
 		</div>
 		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
@@ -224,8 +238,9 @@ function showUserInfo(id) {
 			<div class="sidebar-module">
 				<h4>Friends List</h4>
 				<ol class="list-unstyled">
-					<li><a href="#">Noh heeseok</a></li>
-					<li><a href="#">Pack gyerae</a></li>
+					<!-- <li><a href="#">Noh heeseok</a></li>
+					<li><a href="#">Pack gyerae</a></li> -->
+					<%-- <jsp:include page="friendList.jsp"/> --%>
 					
 				</ol>
 			</div>
