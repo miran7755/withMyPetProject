@@ -18,7 +18,7 @@
   	<setting name="defaultExecutorType" value="BATCH"/>
   </settings>
   <mappers>
-    <!-- <mapper resource="config/BoardMapper.xml"/> -->
+    <mapper resource="config/BoardMapper.xml"/>
     <mapper resource="config/MemberMapper.xml"/>
 
   </mappers>

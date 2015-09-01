@@ -170,9 +170,9 @@ function showUserInfo(id) {
 				<div id="navbar-scroll"
 					class="collapse navbar-collapse navbar-backyard navbar-left">
 					<ul class="nav navbar-nav">
-						<li><a href="#intro">지식in</a></li>
-						<li><a href="#feature">지식in</a></li>
-						<li><a href="#download">지식in</a></li>
+						<li><a href="#intro"></a></li>
+						<li><a href="boardlistview.do">지식in</a></li>
+						<li><a href="#download"></a></li>
 					</ul>
 				</div>
 				<ul class="nav navbar-nav navbar-right">

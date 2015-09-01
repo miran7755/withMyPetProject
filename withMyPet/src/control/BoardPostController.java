@@ -36,7 +36,7 @@ public class BoardPostController {
 		System.out.println("media_tag = " + media_tag);
 		
 		try {
-			dao.insertAll(post, media_tag);
+			dao.boardInsertPost(post, media_tag);
 
 		} catch (AddException e) {
 			e.printStackTrace();

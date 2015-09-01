@@ -3,56 +3,94 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="BoardMapper">
-	<!-- <resultMap id="resultOrderLine" type="com.my.vo.OrderLine">
-		<result column="order_info_no" property="order_no" />
-		<result column="order_line_no" property="order_line_no" />
-		<result column="quantity" property="quantity" />
-		<association property="product" resultMap="ProductMapper.p"/>
-		<association property="product" javaType="com.my.vo.Product">
-			<result column="prod_no" property="prod_no" />
-			<result column="prod_name" property="prod_name" />
-			<result column="prod_price" property="prod_price" />
+	<resultMap id="resultPost" type="vo.Post">
+		<result column="post_no" property="post_no" />
+		<result column="subject" property="subject" />
+		<result column="post_date" property="post_date" />
+		<result column="hate_count" property="hate_count" />
+		<result column="like_count" property="like_count" />
+		<result column="msg" property="msg" />
+		<result column="tb_flag" property="tb_flag" />
+		<association property="member" javaType="vo.Member">
+			<result column="e_mail" property="e_mail" />
 		</association>
 	</resultMap>
-	<resultMap id="resultOrderInfo" type="com.my.vo.OrderInfo">
-		<result column="order_no" property="order_no" />
-		<result column="order_time" property="order_time" />
-		<association property="customer" javaType="Customer">
-			<result column="order_id" property="id" />
-			<result column="name" property="name" />
-			<result column="password" property="password" />
-		</association>
-		<collection property="lines" column="order_line_no" resultMap="resultOrderLine" />
-	</resultMap>
- -->
 
-	<insert id="insertAll">
-		INSERT INTO post(post_no, subject, e_mail, msg, tb_flag) 
-		VALUES ( order_seq.NEXTVAL, #{subject}, #{member.e_mail}, #{msg}, #{tb_flag})
+	<insert id="insertPost" >
+		INSERT INTO post( post_no, subject, e_mail, msg, tb_flag ) 
+		VALUES ( post_seq.NEXTVAL, #{subject}, #{member.e_mail}, #{msg}, #{tb_flag} )
 	</insert>
-	<insert id="insertLINE" >		
-		INSERT INTO order_line(order_info_no, order_line_no, order_prod_no, quantity)
-		VALUES(order_seq.CURRVAL, #{order_line_no}, #{product.prod_no}, #{quantity})			
+	<insert id="insertMedia" >		
+		INSERT INTO media_tag( post_no, tag_name, img, video )
+		VALUES( post_seq.CURRVAL, #{tag_name}, #{img}, #{video} )			
 	</insert>
+	<select id="selectAll" resultMap="resultPost">
+		SELECT post_no, subject, e_mail, post_date, like_count, hate_count
+		FROM post 
+		ORDER BY post_no DESC
+	</select>
+	<select id="selectAllPage" parameterType="hashmap" resultMap="resultPost">
+		SELECT * 
+		FROM (SELECT ROWNUM rn, a.*  
+ 			  FROM (SELECT post_no, subject, e_mail, post_date, like_count, hate_count, tb_flag 
+  					FROM post
+  					WHERE tb_flag = 'b'
+  					ORDER BY post_no DESC) a
+			 ) 
+ 		WHERE rn BETWEEN startRow( #{currentPage},  #{cntPerPage} ) AND endRow( #{currentPage}, #{cntPerPage} )     
+  	</select>
+	<select id="getTotalCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM post
+		WHERE tb_flag = 'b'
+	</select>
+	<select id="selectBySubject" resultMap="resultPost">
+		SELECT post_no, subject, like_count, hate_count,e_mail, post_date 
+		FROM post 
+		WHERE subject LIKE #{value} AND AND tb_flag = 'b'
+		ORDER BY post_no DESC
+	</select>
+	<select id="selectByEmail" resultMap="resultPost">
+		SELECT post_no, subject, e_mail, post_date, like_count, hate_count
+		FROM post 
+		WHERE e_mail = #{value} AND tb_flag = 'b'
+		ORDER BY post_no DESC
+	</select>
+	<select id="postDetail" resultMap="resultPost">
+		SELECT post_no, subject, hate_count, like_count, e_mail, msg, post_date 
+		FROM post
+		WHERE post_no = #{post_no}
+	</select>
+	<select id="media_tagDetail" resultType="vo.Media_tag">
+		SELECT post_no, img, video
+		FROM media_tag
+		WHERE post_no = #{post_no}
+	</select>
+	<update id="likeCount">
+		UPDATE post
+		SET like_count = #{like_count}
+    	WHERE post_no = #{post_no}		
+	</update>
+	<update id="hateCount">
+		UPDATE post
+		SET hate_count = #{hate_count}
+    	WHERE post_no = #{post_no}		
+	</update>
+	<insert id="insertReply">
+		INSERT INTO reply(post_no, reply_no, reply_email, msg, reply_date, like_count, img)
+    	VALUES(#{post_no}, reply_seq.NEXTVAL, #{reply_email}, #{msg}, SYSDATE, #{like_count}, #{img})
+	</insert>
+	<select id="selectReply" resultType="vo.Reply">
+		SELECT reply_no, msg, reply_email, reply_date, like_count
+    	FROM reply
+    	WHERE post_no = #{post_no}
+    	ORDER BY reply_date desc
+	</select>
+	<update id="replyLikeCount">
+		UPDATE reply
+		SET like_count = #{like_count}
+    	WHERE reply_no = #{reply_no}		
+	</update>
 	
-	<!--주문자ID로 주문상세내역조회 -->
-	<select id="selectById" resultMap="resultOrderInfo">
-		SELECT order_no, order_id, order_time,
-		order_line_no, quantity,
-		prod_no, prod_name, prod_price
-		FROM order_info info
-		JOIN order_line line ON info.order_no = line.order_info_no
-		JOIN product p ON p.prod_no = line.order_prod_no
-		WHERE order_id=#{id}
-		ORDER BY order_no DESC, order_line_no ASC
-	</select>
-	<!--주문번호로 주문상세내역조회 -->
-	<select id="selectByInfoNo" resultMap="resultOrderLine">
-		SELECT order_info_no, order_line_no, quantity,
-		prod_no, prod_name, prod_price
-		FROM order_line line
-		JOIN product p ON p.prod_no = line.order_prod_no
-		WHERE order_info_no=#{no}
-		ORDER BY order_line_no ASC
-	</select>
+
 </mapper>
