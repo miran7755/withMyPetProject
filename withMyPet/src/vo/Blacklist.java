@@ -3,40 +3,28 @@ package vo;
 import java.util.Date;
 
 public class Blacklist {
-
-	private Date bl_date;
-	private String bl_email;
-	private Date bl_release;
 	private int blacklist_no;
-	private String reported_email;
-
-	public Blacklist(){
-
+	private String e_mail;
+	private Date bl_date;	
+	private Date bl_release;
+	
+	public Blacklist() {
+		super();
 	}
 
-
-	public Date getBl_date() {
-		return bl_date;
-	}
-
-	public void setBl_date(Date bl_date) {
+	public Blacklist(int blacklist_no, String e_mail, Date bl_date,
+			Date bl_release) {
+		super();
+		this.blacklist_no = blacklist_no;
+		this.e_mail = e_mail;
 		this.bl_date = bl_date;
-	}
-
-	public String getBl_email() {
-		return bl_email;
-	}
-
-	public void setBl_email(String bl_email) {
-		this.bl_email = bl_email;
-	}
-
-	public Date getBl_release() {
-		return bl_release;
-	}
-
-	public void setBl_release(Date bl_release) {
 		this.bl_release = bl_release;
+	}
+
+	@Override
+	public String toString() {
+		return "\nBlacklist [blacklist_no=" + blacklist_no + ", e_mail=" + e_mail
+				+ ", bl_date=" + bl_date + ", bl_release=" + bl_release + "]";
 	}
 
 	public int getBlacklist_no() {
@@ -47,12 +35,30 @@ public class Blacklist {
 		this.blacklist_no = blacklist_no;
 	}
 
-	public String getReported_email() {
-		return reported_email;
+	public String getE_mail() {
+		return e_mail;
 	}
 
-	public void setReported_email(String reported_email) {
-		this.reported_email = reported_email;
+	public void setE_mail(String e_mail) {
+		this.e_mail = e_mail;
 	}
+
+	public Date getBl_date() {
+		return bl_date;
+	}
+
+	public void setBl_date(Date bl_date) {
+		this.bl_date = bl_date;
+	}
+
+	public Date getBl_release() {
+		return bl_release;
+	}
+
+	public void setBl_release(Date bl_release) {
+		this.bl_release = bl_release;
+	}
+	
+	
 
 }

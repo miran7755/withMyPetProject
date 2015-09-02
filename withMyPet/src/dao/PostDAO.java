@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import vo.Blacklist;
 import vo.Media_tag;
+import vo.Member;
 import vo.Post;
 import vo.Reply;
+import vo.Report;
 import exception.AddException;
 
 public interface PostDAO {
@@ -90,8 +93,40 @@ public interface PostDAO {
 	 * @throws Exception
 	 */
 	void replyLikeCount(Reply reply) throws Exception;
+	/**
+	 * 해당 댓글에 좋아요 수를 불러온다.
+	 * @param reply
+	 * @return
+	 */
+	int selectReplyLikeCount(Reply reply);
+	/**
+	 * 신고 카운트를 1 증가시킨다.
+	 * @param report
+	 */
+	void report(Report report);
+	/**
+	 * 신고횟수를 조회해온다.
+	 * @param report
+	 * @return
+	 */
+	int reportCount(Report report);
+	/**
+	 * 블랙리스트에 추가한다.
+	 * @param blacklist
+	 */
+	void insertBlackList(Blacklist blacklist);
+	/**
+	 * BlackList Flag를 변경해준다.
+	 * @param member
+	 */
+	void updateBlFlag(String e_mail);
+	/**
+	 * 해당 e_mail 유저의 멤버정보를 가져온다.
+	 * @param reported_email
+	 * @return
+	 */
+	Member selectByMember(String reported_email);
 	
 	
 
 }
-

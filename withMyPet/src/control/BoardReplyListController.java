@@ -34,8 +34,7 @@ public class BoardReplyListController{
 			mav.addObject("replys", replys);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		
 		mav.setViewName(url);
 		return mav;
