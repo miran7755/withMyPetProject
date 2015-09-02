@@ -218,7 +218,11 @@ span.buttonText {
 
 	<!-- /.parallax full screen background image -->
 	<div class="fullscreen landing parallax"
+<<<<<<< HEAD
 		style="background-image: url('images/bg2.jpg');" data-img-width="2000"
+=======
+		style="background-image: url('images/bg.jpg');" data-img-width="2000"
+>>>>>>> refs/remotes/origin/master
 		data-img-height="1333" data-diff="100">
 		<div class="overlay">
 			<div class="container">
@@ -354,6 +358,7 @@ span.buttonText {
 	</div>
 	</div>
 
+<<<<<<< HEAD
 
 
 
@@ -403,6 +408,8 @@ span.buttonText {
 	</div>
 </div> -->
 
+=======
+>>>>>>> refs/remotes/origin/master
 	<!-- /.footer -->
 	<footer id="footer">
 		<div class="container">

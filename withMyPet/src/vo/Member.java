@@ -105,4 +105,14 @@ public class Member{
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Member [e_mail=" + e_mail + ", password=" + password + ", img="
+				+ img + ", nickname=" + nickname + ", gender=" + gender
+				+ ", birthdate=" + birthdate + ", reg_date=" + reg_date
+				+ ", bl_flag=" + bl_flag + "]";
+	}
+	
+	
+
 }

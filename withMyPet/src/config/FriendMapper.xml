@@ -6,7 +6,7 @@
 
 
 		
-	<!-- 친구 찾기  -->
+	<!-- 내 친구 리스트  -->
 	<select id="selectFriend" resultType="vo.Member">
 	SELECT * FROM friend_list WHERE e_mail = #{email}
 	</select>
