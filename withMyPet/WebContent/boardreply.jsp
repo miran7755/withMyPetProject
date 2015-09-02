@@ -17,13 +17,12 @@ $(document).ready(function(){
 		var reply_msg = $("#reply_msg").val();
 		var img = $("#img").val();
 		
-		$.post(url, {"post_no":post_no, "reply_email":reply_email, "msg":reply_msg, "img":img});	
+		$.post(url, {"post_no":post_no, "reply_email":reply_email, "msg":reply_msg, "img":img}, successFunction);	
 	});
 });
 </script>
 </head>
 <body>
-
 <div>
 	<table border="1" cellspacing="0">
 		<tr><td colspan="3">댓글 남기기</td></tr>
@@ -35,6 +34,5 @@ $(document).ready(function(){
 		
 	</table>	 
 </div>
-
 </body>
 </html>

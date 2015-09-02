@@ -72,4 +72,13 @@ public class Reply {
 		this.reply_date = reply_date;
 	}
 
+	@Override
+	public String toString() {
+		return "\nReply [reply_no=" + reply_no + ", post_no=" + post_no
+				+ ", reply_email=" + reply_email + ", msg=" + msg
+				+ ", like_count=" + like_count + ", img=" + img
+				+ ", reply_date=" + reply_date + "]";
+	}
+
+	
 }

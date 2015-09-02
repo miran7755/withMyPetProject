@@ -20,30 +20,26 @@ public class BoardPostController {
 	private PostDAO dao;
 
 	@RequestMapping
-	public ModelAndView execute(@ModelAttribute Post post,
+	public ModelAndView execute(@ModelAttribute Member member,
+								@ModelAttribute Post post,
 								@ModelAttribute Media_tag media_tag, 
 								HttpSession session) {
 		System.out.println("in BoardPostController");
 		ModelAndView mav = new ModelAndView();
+		String url = "boardlistview.do";
 		
-		String e_mail = (String) session.getId();
-		Member member = new Member();
-		member.setE_mail(e_mail);
+		member = (Member) session.getAttribute("loginInfo");
 		post.setMember(member);
-		
-		System.out.println("e_mail = " + e_mail);
-		System.out.println("post = " + post);
-		System.out.println("media_tag = " + media_tag);
 		
 		try {
 			dao.boardInsertPost(post, media_tag);
-
+			
 		} catch (AddException e) {
 			e.printStackTrace();
-		}
-
+		}		
+		
+		mav.setViewName(url);
 		return mav;
 	}
 
 }
-
