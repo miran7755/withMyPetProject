@@ -23,15 +23,20 @@ public class FriendListController {
 	public ModelAndView execute(@RequestParam(required=false, value="email") String email,
 			HttpSession session  ){
 		ModelAndView mav = new ModelAndView();
+		ArrayList<Member> fl = new ArrayList<Member>();
+		Member my = (Member) session.getAttribute("loginInfo");
+		System.out.println("my : " + my);
+		String myemail = my.getE_mail();
+		//System.out.println("myemail : " + myemail + "email: " + email);
 		
-		String myemail = (String) session.getAttribute(email);
-		
+		String url = "/friendlistResult.jsp";
 		try {
-			ArrayList<Member> fl = dao.selectFriend(myemail);
+			fl = dao.selectFriend(myemail);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
+		mav.addObject("fl", fl);
+		mav.setViewName(url);
 		return mav;
 	}
 
