@@ -11,8 +11,6 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 
-
-
 <!-- /.website title -->
 <title>With My Pet</title>
 <meta name="viewport"
@@ -63,24 +61,32 @@
 						var image = document.getElementById('image');
 						image.src = 'http://graph.facebook.com/' + user.id
 								+ '/picture';
-						var name = document.getElementById('name');
+
+						/* var name = document.getElementById('name');
 						name.innerHTML = user.name
 						var id = document.getElementById('id');
 						console.log(user.id);
-						id.innerHTML = user.id;
+						id.innerHTML = user.id; */
 						//var email = document.getElementById('email');
 						//var birthday = document.getElementById('birthday');
-						console.log(user.email);
+						console.log("user.email : " + user.email);
 						//console.log(user.birthday);
 						//email=user.email;
 						email.innerHTML = user.email;
 						//birthday.innerHTML = user.birthday;
 
-						/*$.post("signup.do", {
+						var emailVal = user.email;
+						console.log("friendList email=>" + emailVal);
+						$.get("friendlist.do", "email=" + emailVal, function(
+								resultData) {
+							$("#friendlist").html(resultData);
+						});
+
+						$.post("FBSignupLogin.do", {
 							"n_email" : user.email,
 							"n_nickname" : user.name,
 							"n_pwd" : "fb"
-						}); */
+						});
 						console.log("email **** : " + user.email
 								+ " nickname ***  : " + user.name);
 					}
@@ -147,6 +153,7 @@
 		}
 
 	};
+
 	$(document).ready(function() {
 		//menu용 a 태그를 클릭 했을 때 이벤트 처리
 		$(document).on("click", "a", function(event) { //click(function(event) {
@@ -165,19 +172,14 @@
 			alert("pet 등록");
 		});
 
+		if (url.trim() != "") {
+			$.get(url, successFunction);
+		}
 	});
+
 	function successFunction(responseData) {
 		$("#aaa").html(responseData);
 	}
-
-	$(document).ready(function() {
-		//alert("test");
-		//var emailVal = $("#email").html();
-		//console.log("email=" + emailVal);
-		//$.get("friendlist.do", "email=" + emailVal, function(resultData) {
-		//	$("#friemdlist").html(resultData);
-		//});
-	});
 </script>
 
 <body data-spy="scroll" data-target="#navbar-scroll">
@@ -222,13 +224,10 @@
 					</ul>
 				</div>
 				<ul class="nav navbar-nav navbar-right">
+
 					<li><img id="image"></li>
-					<li>
-						<div id="id"></div>
-					</li>
-					<li>
-						<div id="name"></div>
-					</li>
+					<!-- <li> <div id="id"></div></li> -->
+					<!-- <li> <div id="name"></div></li> -->
 					<li>
 						<div id="email"></div>
 					</li>
@@ -236,29 +235,34 @@
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">회원정보 <span class="caret"></span></a>
+
 						<ul class="dropdown-menu" id="friendlist">
 							<li><a data-toggle="modal" data-target="#myModal">Pet등록</a></li>
+
 							<li><a href="#">회원정보 수정</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="#">Logout</a></li>
+							<li><a href="logout.do">Logout</a></li>
 						</ul></li>
 				</ul>
 			</div>
 		</nav>
 	</div>
 
+
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<div id="aaa" class="blog-post">
-				<h2 class="blog-post-title">Timeline 노출되는 부분</h2>
 
-				<p>사용자정보 출력</p>
-				<div align="left">
-					<img id="image" />
-					<div id="name"></div>
-					<div id="id"></div>
-					<div id="email"></div>
-					<div id="birthday"></div>
+			<div class="blog-post">
+				<!-- <h2 class="blog-post-title">Timeline 노출되는 부분</h2> -->
+				<div id="aaa">
+					<div align="left">
+						<img id="image" />
+						<div id="name"></div>
+						<div id="id"></div>
+						<div id="email"></div>
+						<div id="birthday"></div>
+
+					</div>
 				</div>
 			</div>
 		</div>
@@ -274,19 +278,14 @@
 			</div>
 			<div class="sidebar-module">
 				<h4>Friends List</h4>
-				<ol class="list-unstyled">
-					<!-- <li><a href="#">Noh heeseok</a></li>
-					<li><a href="#">Pack gyerae</a></li> -->
-					<%-- <jsp:include page="friendList.jsp"/> --%>
 
-				</ol>
-			</div>
-			<div class="sidebar-module">
-				<h4>Elsewhere</h4>
 				<ol class="list-unstyled">
-					<li><a href="#">GitHub</a></li>
-					<li><a href="#">Twitter</a></li>
-					<li><a href="#">Facebook</a></li>
+				
+					<!-- <li><a href="#">Noh heeseok</a></li> -->
+					<!-- <li><a href="#">Pack gyerae</a></li> -->
+					<jsp:include page="friendlistResult.jsp" />
+
+					
 				</ol>
 			</div>
 		</div>
@@ -317,12 +316,13 @@
 									placeholder="마우스를 클릭해서 검색해주세요." />
 							</p>
 							<p>
-								<label for="passwordsignup">성별 </label>
-								<input type="radio" name="gender">수컷</p>
-								<div class="col-lg-6"></div>
-						
+								<label for="passwordsignup">성별 </label> <input type="radio"
+									name="gender">수컷
+							</p>
+							<div class="col-lg-6"></div>
 
-								
+
+
 							<p>
 								<label for="passwordsignup_confirm" class="youpasswd"
 									data-icon="p">Please confirm your password </label> <input
