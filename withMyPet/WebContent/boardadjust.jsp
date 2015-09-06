@@ -11,18 +11,21 @@
 <script>
 	$(document).ready(function(){
 		$("#adjust").click(function(){
-			var post_no = ${post.post_no};
-			var subject = ${post.subject};
-			var msg = ${post.msg};
+			var post_no = ${param.post_no};
+			var subject = $("#subject").val();
+			var msg = $("#content").val();
+			var tb_flag = "b";
 			
-			$.get("boardadjust.jsp", {"post_no":post_no, "subject":subject, "msg":msg}, successFunction);
+			$.get("boardadjust.do", {"post_no":post_no, "subject":subject, "msg":msg, "tb_flag":tb_flag}, successFunction);
 		});
-		
-		$("#delete").click(function(){
-			var post_no = ${post.post_no};
-			$.get("boarddelete.do", {"post_no":post_no}, successFunction);
-		});		
+			
+		$("#back").click(function(){
+			$.get("boardlistview.do", successFunction);
+		});	
 	});
+	
+	FormNotice.reply.focus();
+	FormNotice.reply.value = FormNotice.reply.value;
 </script>
 </head>
 <body>
@@ -33,13 +36,15 @@
 			<td width="10%">글번호</td>
 			<td width="10%">${param.post_no }</td>
 			<td width="10%">제목</td>
-			<td width="70%" colspan="6">${param.subject }</td>
+			<td width="70%" colspan="6">
+				<textarea id="subject" cols="40" rows="1" style="width:100%;" required>${param.subject }</textarea>		
+			</td>
 		</tr>
 		<tr>
 			<td width="10%">작성자</td>
-			<td width="20%">${param.member.e_mail}</td>
+			<td width="20%">${sessionScope.loginInfo.e_mail}</td>
 			<td width="10%">작성날짜</td>
-			<td width="20%"><fmt:formatDate value="${param.post_date }" pattern="yyyy-MM-dd KK:mm:ss"/></td>
+			<td width="20%">${param.post_date }</td>
 			<td width="10%">${param.like_count }</td>
 			<td width="10%"><input type="button" id="like" value="좋아요"></td>
 			<td width="10%">${param.hate_count }</td>
@@ -47,17 +52,16 @@
 		</tr>
 		<tr>
 			<td width="90%" colspan="8">
-				<textarea id="msg">
-					${param.msg } 
-					${param.img }
-					${param.video} 
+			<form name="FormNotice">
+				<textarea id="content" cols="75" rows="6" style="width:100%;" required>${param.msg }${param.img }${param.video}
 				</textarea>				
+			</form>
 			</td>
 		</tr>
 	</table>
 	<div class="text-center">
-		<input type="button" id="adjust" value="수정하기"></td>
-		<input type="button" id="back" value="돌아가기"></td>
+		<input type="button" id="adjust" value="수정하기">
+		<input type="button" id="back" value="돌아가기">
 	</div>	
 </div>
 

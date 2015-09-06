@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import vo.Media_tag;
 import vo.Member;
 import vo.Post;
 import dao.PostDAO;
+import exception.AddException;
 
 @Controller("/boardadjust.do")
 public class BoardAdjustController{
@@ -18,20 +20,34 @@ public class BoardAdjustController{
 	private PostDAO dao;
 	
 	@RequestMapping
-	public ModelAndView execute(@ModelAttribute Post post,
+	public ModelAndView execute(@ModelAttribute Member member,
+								@ModelAttribute Post post,
+								@ModelAttribute Media_tag media_tag,
 								HttpSession session){
 		System.out.println("in BoardAdjustController");
 		ModelAndView mav = new ModelAndView();
-		String url = "";
+		String url = "/boarddetail.do";
 		
-		Member member = (Member) session.getAttribute("loginInfo");
+		member = (Member) session.getAttribute("loginInfo");
 		post.setMember(member);
-		post.setTb_flag('b');
 		
-		
+		System.out.println("member = " + member);
 		System.out.println("post = " + post);
+		System.out.println("media_tag = " + media_tag);
 		
 		
+		try {
+			dao.boardPostUpdate(post);
+			post = dao.boardPostDetail(post.getPost_no());
+			media_tag = dao.boardMedia_tagDetail(post.getPost_no());
+		
+			mav.addObject("post", post);
+			mav.addObject("media_tag", media_tag);
+		} catch (AddException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 		
 		mav.setViewName(url);
 		return mav;

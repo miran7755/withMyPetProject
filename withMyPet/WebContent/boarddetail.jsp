@@ -32,15 +32,16 @@
 		});		
 		
 		$("#adjust").click(function(){
+			alert("버튼클릭");
 			var post_no = ${post.post_no};
-			var subject = ${post.subject};
-			var e_mail = ${post.member.e_mail};
-			var post_date = ${post.post_date};
+			var subject = "${post.subject}";
+			var e_mail = "${post.member.e_mail}";
+			var post_date = '${post.post_date}';
 			var like_count = ${post.like_count};
 			var hate_count = ${post.hate_count};
-			var msg = ${post.msg};
-			var img = ${media_tag.img};
-			var video = ${media_tag.video};
+			var msg = "${post.msg}";
+			var img = "${media_tag.img}";
+			var video = "${media_tag.video}";
 			
 			$.get("boardadjust.jsp", {"post_no":post_no, "subject":subject, "e_mail":e_mail, "post_date":post_date, "like_count":like_count, "hate_count":hate_count, "msg":msg, "img":img, "video":video}, successFunction);
 		});
@@ -76,10 +77,7 @@
 		</tr>
 		<tr>
 			<td width="90%" colspan="8">
-				<textarea >
-					${post.msg } 
-					${media_tag.img }
-					${media_tag.video} 
+				<textarea id="content" readonly="readonly" cols="75" rows="6" style="width:100%;">${post.msg }${media_tag.img }${media_tag.video} 
 				</textarea>
 			</td>
 		</tr>
@@ -88,10 +86,10 @@
 	</table>
 	<div class="text-center">
 		<c:if test="${sessionScope.loginInfo.e_mail eq post.member.e_mail}">
-			<td width="5%" align="center"><input type="button" id="adjust" value="수정하기"></td>
-			<td width="5%" align="center"><input type="button" id="delete" value="삭제하기"></td>
+			<input type="button" id="adjust" value="수정하기">
+			<input type="button" id="delete" value="삭제하기">
 		</c:if>
-		<input type="button" id="back" value="돌아가기"></td>
+		<input type="button" id="back" value="돌아가기">
 	</div>
 	
 	 

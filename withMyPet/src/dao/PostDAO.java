@@ -150,8 +150,6 @@ public interface PostDAO {
 	 * 게시글을 수정한다.
 	 * @param post
 	 */
-	void boardPostUpdate(Post post);
-	
-	
+	void boardPostUpdate(Post post);	
 
 }

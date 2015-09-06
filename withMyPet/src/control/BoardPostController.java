@@ -31,9 +31,6 @@ public class BoardPostController {
 		member = (Member) session.getAttribute("loginInfo");
 		post.setMember(member);
 		
-		System.out.println(post);
-		System.out.println(media_tag);
-		
 		try {
 			dao.boardInsertPost(post, media_tag);			
 		} catch (AddException e) {
