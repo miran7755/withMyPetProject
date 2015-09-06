@@ -153,20 +153,50 @@ public class PostDAOOracle implements PostDAO {
 	}
 	
 	@Override
-	public void updateBlFlag(String e_mail) {
+	public void deleteBlackList(String e_mail) {
+		System.out.println("in PostDAOOracle deleteBlackList()");
+		session.delete("BoardMapper.deleteBlackList", e_mail);
+	}
+	
+	@Override
+	public void updateBlFlag(Member member) {
 		System.out.println("in PostDAOOracle updateBlFlag()");
-		session.update("BoardMapper.updateBlFlag", e_mail);
+		session.update("BoardMapper.updateBlFlag", member);
 	}
 
 	@Override
 	public Member selectByMember(String reported_email) {
+		System.out.println("in PostDAOOracle selectByMember()");
 		Member member = new Member();
 		member = session.selectOne("BoardMapper.selectByMember", reported_email);
 		return member;
 	}
 	
+	@Override
+	public Blacklist selectByBlacklist(String e_mail) {
+		System.out.println("in PostDAOOracle selectByBlacklist()");
+		Blacklist blacklist= new Blacklist();
+		blacklist = session.selectOne("BoardMapper.selectByBlacklist", e_mail);
+		return blacklist;
+	}
 	
+	@Override
+	public void boardDelete(int post_no) {
+		System.out.println("in PostDAOOracle boardDelete()");
+		session.delete("BoardMapper.boardDelete", post_no);
+	}
 	
-
-
+	@Override
+	public void boardReplyDelete(Reply reply) {
+		System.out.println("in PostDAOOracle boardReplyDelete()");
+		session.delete("BoardMapper.boardReplyDelete", reply);
+	}
+	
+	@Override
+	public void boardPostUpdate(Post post) {
+		System.out.println("in PostDAOOracle boardPostUpdate()");
+		session.update("BoardMapper.boardPostSubjectUpdate", post);
+		session.update("BoardMapper.boardPostMsgUpdate", post);
+	}
+	
 }

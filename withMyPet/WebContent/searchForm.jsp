@@ -1,13 +1,5 @@
 <%@page contentType = "text/html;charset=UTF-8" %>
-<!-- searchForm.jsp -->
-<%-- 
-<%String item = request.getParameter("item"); %>
-<%String value = request.getParameter("value");
-if(value == null){
-	value = "";
-}
-%>
- --%>
+
  <!DOCTYPE html>
 <meta charset="UTF-8">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -31,7 +23,7 @@ if(value == null){
 
 </script>
 <!-- form태그에  action속성이 생략된경우 submit버튼이 클릭되면 현재사용중인 URL을 요청함 -->
-<form>
+<form class="text-right">
 	<select name="item">
 		<option value="e_mail">작성자로검색</option>
 		<option value="subject">제목으로검색</option>

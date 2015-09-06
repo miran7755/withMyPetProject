@@ -119,13 +119,38 @@ public interface PostDAO {
 	 * BlackList Flag를 변경해준다.
 	 * @param member
 	 */
-	void updateBlFlag(String e_mail);
+	void updateBlFlag(Member member);
 	/**
 	 * 해당 e_mail 유저의 멤버정보를 가져온다.
 	 * @param reported_email
 	 * @return
 	 */
 	Member selectByMember(String reported_email);
+	/**
+	 * 이메일에 해당하는 블랙리스트 정보를 가져온다.
+	 * @return
+	 */
+	Blacklist selectByBlacklist(String e_mail);
+	/**
+	 * 블랙리스트 날짜가 지나면 디비에서 삭제한다.
+	 * @param e_mail
+	 */
+	void deleteBlackList(String e_mail);
+	/**
+	 * 게시판 게시물을 삭제한다.
+	 * @param e_mail
+	 */
+	void boardDelete(int post_no);
+	/**
+	 * 댓글을 삭제한다.
+	 * @param reply_no
+	 */
+	void boardReplyDelete(Reply reply);
+	/**
+	 * 게시글을 수정한다.
+	 * @param post
+	 */
+	void boardPostUpdate(Post post);
 	
 	
 

@@ -24,15 +24,23 @@ $(document).ready(function(){
 </head>
 <body>
 <div>
-	<table border="1" cellspacing="0">
-		<tr><td colspan="3">댓글 남기기</td></tr>
+	<table class="table table-striped text-center" border="1" cellspacing="0">
 		<tr>
-			<td>댓글 : <input type="text" id="reply_msg"></td>
-			<td>사진첨부 : <input type="file" accept="jpg|png" id="img"><br></td>
+			<td>댓글 남기기</td>
+			<td><input type="file" accept="jpg|png" id="img"><br></td>
 			<td><input type="button" value="댓글남기기" id="reply_button"></td>
 		</tr>
+		<tr>
+			<td colspan="3" style="border: 1px solid;">
+    			<textarea id="reply_msg" placeholder="댓글을 입력하세요." name="content" cols="75" rows="3" style="width:100%;" required></textarea>
+   			</td>
+   		</tr>
+	</table>
 		
-	</table>	 
+	<!-- <TEXTAREA  id="reply_msg"  COLS=70 ROWS=3 required>댓글을 입력하세요.</TEXTAREA> -->
+			<!-- <td colspan="3">댓글 : <input size="81" autocomplete="off" style="height:30px;" type="text" id="reply_msg" required></td> -->
+		
+		 
 </div>
 </body>
 </html>

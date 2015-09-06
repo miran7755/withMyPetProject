@@ -45,9 +45,9 @@
 		WHERE tb_flag = 'b'
 	</select>
 	<select id="selectBySubject" resultMap="resultPost">
-		SELECT post_no, subject, like_count, hate_count,e_mail, post_date 
+		SELECT post_no, subject, like_count, hate_count, e_mail, post_date 
 		FROM post 
-		WHERE subject LIKE #{value} AND AND tb_flag = 'b'
+		WHERE subject LIKE #{value} AND tb_flag = 'b'
 		ORDER BY post_no DESC
 	</select>
 	<select id="selectByEmail" resultMap="resultPost">
@@ -81,7 +81,7 @@
     	VALUES(#{post_no}, reply_seq.NEXTVAL, #{reply_email}, #{msg}, SYSDATE, #{like_count}, #{img})
 	</insert>
 	<select id="selectReply" resultType="vo.Reply">
-		SELECT reply_no, msg, like_count, reply_email, reply_date, post_no
+		SELECT reply_no, msg, like_count, reply_email, reply_date, post_no, img
     	FROM reply
     	WHERE post_no = #{post_no}
     	ORDER BY reply_date desc
@@ -109,9 +109,13 @@
 		INSERT INTO blacklist(blacklist_no, e_mail, bl_date, bl_release)
 		VALUES(blacklist_seq.NEXTVAL, #{e_mail}, SYSDATE, SYSDATE + 30 )
 	</insert>
+	<delete id="deleteBlackList">
+		DELETE FROM blacklist
+		WHERE e_mail = #{e_mail}		
+	</delete>
 	<update id="updateBlFlag">
 		UPDATE member
-		SET bl_flag = 'T'
+		SET bl_flag = #{bl_flag}
 		WHERE e_mail = #{e_mail}
 	</update>
 	<select id="selectByMember" resultType="vo.Member">
@@ -119,5 +123,27 @@
 		FROM member
 		WHERE e_mail = #{e_mail}		
 	</select>
-	
+	<select id="selectByBlacklist" parameterType="String" resultType="vo.Blacklist">
+		SELECT *
+		FROM blacklist
+		WHERE e_mail = #{e_mail}
+	</select>
+	<delete id="boardDelete">
+		DELETE FROM post
+		WHERE post_no = #{post_no}		
+	</delete>
+	<delete id="boardReplyDelete">
+		DELETE FROM reply
+		WHERE post_no = #{post_no} AND reply_no = #{reply_no}		
+	</delete>
+	<update id="boardPostSubjectUpdate">
+		UPDATE post
+		SET subject = #{subject}
+		WHERE post_no = #{post_no}		
+	</update>
+	<update id="boardPostMsgUpdate">
+		UPDATE post
+		SET msg = #{msg}
+		WHERE post_no = #{post_no}		
+	</update>
 </mapper>
