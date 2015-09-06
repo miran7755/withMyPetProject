@@ -36,114 +36,6 @@
 
 </head>
 <script>
-	window.fbAsyncInit = function() {
-		FB.init({
-			appId : '697333240402235',
-			xfbml : true,
-			cookie : true,
-
-			version : 'v2.4'
-		});
-		var email = document.getElementById('email');
-		FB.getLoginStatus(function(response) {
-			if (response.status === 'connected') {
-				//alert("LoginStatus -------");
-				FB.api('/me?fields=id,name,email', function(user) {
-					if (user) {
-						var image = document.getElementById('image');
-						image.src = 'http://graph.facebook.com/' + user.id
-								+ '/picture';
-						/* var name = document.getElementById('name');
-						name.innerHTML = user.name
-						var id = document.getElementById('id');
-						console.log(user.id);
-						id.innerHTML = user.id; */
-						//var email = document.getElementById('email');
-						//var birthday = document.getElementById('birthday');
-						console.log("user.email : " +user.email);
-						//console.log(user.birthday);
-						//email=user.email;
-						email.innerHTML = user.email;
-						//birthday.innerHTML = user.birthday;
-
-						var emailVal = user.email;
-						console.log("friendList email=>" + emailVal);
-						$.get("friendlist.do",
-							"email=" + emailVal, function(resultData) {
-							$("#friendlist").html(resultData);
-						});
-
-						$.post("FBSignupLogin.do", {
-							"n_email" : user.email,
-							"n_nickname" : user.name,
-							"n_pwd" : "fb"
-						});
-						console.log("email **** : " + user.email
-								+ " nickname ***  : " + user.name);
-					}
-				});
-
-			} else if (response.status === 'not_authorized') {
-
-			}
-		}, {
-			scope : 'email'
-		});
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {
-				return;
-			}
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-
-		function signinCallback(authResult) {
-			if (authResult['access_token']) {
-				// 승인 성공
-				// 사용자가 승인되었으므로 로그인 버튼 숨김. 예:
-				//document.getElementById('signinButton').setAttribute('style',
-				//			'display: none');
-			} else if (authResult['error']) {
-				// 오류가 발생했습니다.
-				// 가능한 오류 코드:
-				//   "access_denied" - 사용자가 앱에 대한 액세스 거부
-				//   "immediate_failed" - 사용자가 자동으로 로그인할 수 없음
-				// console.log('오류 발생: ' + authResult['error']);
-			}
-		}
-
-		(function(d) {
-			var js, id = 'facebook-jssdk', ref = d
-					.getElementsByTagName('script')[0];
-			if (d.getElementById(id)) {
-				return;
-			}
-			js = d.createElement('script');
-			js.id = id;
-			js.async = true;
-			js.src = "//connect.facebook.net/ko_KR/all.js";
-			ref.parentNode.insertBefore(js, ref);
-		}(document));
-
-		function showUserInfo(id) {
-			FB
-					.api(
-							{
-								method : 'fql.query',
-								query : 'SELECT name, pic_square FROM user WHERE uid='
-										+ id
-							},
-							function(response) {
-								document.getElementById('userInfo').innerHTML += ('<img src="' + response[0].pic_square + '"> ' + response[0].name);
-
-							});
-		}
-
-	};
-
 	/* $(document).ready(function(user) {
 	 //alert("test");
 	 //var emailVal=$("#email").html();
@@ -154,22 +46,165 @@
 	 });
 	 }); */
 
-	$(document).ready(function() {
-		//menu용 a 태그를 클릭 했을 때 이벤트 처리
-		$(document).on("click", "a", function(event) { //click(function(event) {
-			event.preventDefault(); //기본 이벤트(url 요청하기) 막기
-			//alert("동작");
-			var url = $(this).prop("href");
-			//url을 get 방식 요청한  후 응답되면 successFunction함수를 호출하라
+	$(document)
+			.ready(
+					function() {
+						window.fbAsyncInit = function() {
+							FB.init({
+								appId : '697333240402235',
+								xfbml : true,
+								cookie : true,
 
-			if (url.trim() != "") {
-				$.get(url, successFunction);
-			}
-		});
-	});
+								version : 'v2.4'
+							});
+
+							FB
+									.getLoginStatus(
+											function(response) {
+												if (response.status === 'connected') {
+													//alert("LoginStatus -------");
+													FB
+															.api(
+																	'/me?fields=id,name,email',
+																	function(
+																			user) {
+																		if (user) {
+																			var image = document
+																					.getElementById('image');
+																			image.src = 'http://graph.facebook.com/'
+																					+ user.id
+																					+ '/picture';
+																			/* var name = document.getElementById('name');
+																			name.innerHTML = user.name
+																			var id = document.getElementById('id');
+																			console.log(user.id);
+																			id.innerHTML = user.id; */
+																			//var email = document.getElementById('email');
+																			//var birthday = document.getElementById('birthday');
+																			console
+																					.log("user.email : "
+																							+ user.email);
+																			//console.log(user.birthday);
+																			//email=user.email;
+																			var email = document
+																					.getElementById('email');
+																			// email.innerHTML = user.email;
+																			//birthday.innerHTML = user.birthday;
+
+																			var emailVal = user.email;
+																			console.log("friendList email=>"
+																							+ emailVal);
+
+																			$.post(
+																							"fbSignupLogin.do",
+																							{
+																								"n_email" : user.email,
+																								"n_nickname" : user.name,
+																								"n_pwd" : "fb"
+																							});
+																			console.log("email **** : "
+																							+ user.email
+																							+ " nickname ***  : "
+																							+ user.name);
+
+																			$.post("friendlist.do", "email="+ emailVal,
+																							function(resultData) {
+																								$("#friendlist").html(resultData);
+																							});
+
+																		}
+																	});
+
+												} else if (response.status === 'not_authorized') {
+
+												}
+											}, {
+												scope : 'email'
+											});
+							(function(d, s, id) {
+								var js, fjs = d.getElementsByTagName(s)[0];
+								if (d.getElementById(id)) {
+									return;
+								}
+								js = d.createElement(s);
+								js.id = id;
+								js.src = "//connect.facebook.net/en_US/sdk.js";
+								fjs.parentNode.insertBefore(js, fjs);
+							}(document, 'script', 'facebook-jssdk'));
+
+							function signinCallback(authResult) {
+								if (authResult['access_token']) {
+									// 승인 성공
+									// 사용자가 승인되었으므로 로그인 버튼 숨김. 예:
+									//document.getElementById('signinButton').setAttribute('style',
+									//			'display: none');
+								} else if (authResult['error']) {
+									// 오류가 발생했습니다.
+									// 가능한 오류 코드:
+									//   "access_denied" - 사용자가 앱에 대한 액세스 거부
+									//   "immediate_failed" - 사용자가 자동으로 로그인할 수 없음
+									// console.log('오류 발생: ' + authResult['error']);
+								}
+							}
+
+							(function(d) {
+								var js, id = 'facebook-jssdk', ref = d
+										.getElementsByTagName('script')[0];
+								if (d.getElementById(id)) {
+									return;
+								}
+								js = d.createElement('script');
+								js.id = id;
+								js.async = true;
+								js.src = "//connect.facebook.net/ko_KR/all.js";
+								ref.parentNode.insertBefore(js, ref);
+							}(document));
+
+							function showUserInfo(id) {
+								FB
+										.api(
+												{
+													method : 'fql.query',
+													query : 'SELECT name, pic_square FROM user WHERE uid='
+															+ id
+												},
+												function(response) {
+													document
+															.getElementById('userInfo').innerHTML += ('<img src="' + response[0].pic_square + '"> ' + response[0].name);
+
+												});
+							}
+
+						};
+
+						//menu용 a 태그를 클릭 했을 때 이벤트 처리
+						$(document).on("click", "a", function(event) { //click(function(event) {
+							event.preventDefault(); //기본 이벤트(url 요청하기) 막기
+							//alert("동작");
+							var url = $(this).prop("href");
+							//url을 get 방식 요청한  후 응답되면 successFunction함수를 호출하라
+
+							if (url.trim() != "") {
+								$.get(url, successFunction);
+							}
+						});
+						
+						$("#search").submit(
+								function(event) {
+									event.preventDefault();
+									$.post("friendsearch.do", $(this).serialize(),
+											successFunction);
+
+								});
+
+					});
 	function successFunction(responseData) {
 		$("#aaa").html(responseData);
 	}
+	
+	
+	
+	
 </script>
 
 <body data-spy="scroll" data-target="#navbar-scroll">
@@ -207,18 +242,24 @@
 
 				<div id="navbar-scroll"
 					class="collapse navbar-collapse navbar-backyard navbar-left">
+					<form class="navbar-form navbar-left" role="search" id="search">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Search" name="search_email">
+							</div>
+							<button type="submit" >Submit</button>
+						</form> 
 					<ul class="nav navbar-nav">
-						<li><a href="#intro"></a></li>
 						<li><a href="boardlistview.do">지식in</a></li>
 						<li><a href="#download"></a></li>
 					</ul>
 				</div>
 				<ul class="nav navbar-nav navbar-right">
-					<li> <img id="image"></li>
+					<li><img id="image"></li>
 					<!-- <li> <div id="id"></div></li> -->
 					<!-- <li> <div id="name"></div></li> -->
-					<li> <div id="email"></div></li>
-					<li> <i>${sessionScope.loginInfo.e_mail}</i>
+					<!-- <li> <div id="email"></div></li> -->
+					<li>
+						<div>${sessionScope.loginInfo.e_mail}</div>
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">회원정보 <span class="caret"></span></a>
@@ -232,7 +273,7 @@
 			</div>
 		</nav>
 	</div>
-	
+
 
 
 	<div id="article" class="row">
@@ -244,10 +285,11 @@
 						<img id="image" />
 						<div id="name"></div>
 						<div id="id"></div>
-						<div id="email"></div>
+						<!-- <div id="email"></div> -->
 						<div id="birthday"></div>
 
 					</div>
+					<%-- <jsp:include page="searchFriendResult.jsp" /> --%>
 				</div>
 			</div>
 		</div>
@@ -262,8 +304,8 @@
 			</div>
 			<div class="sidebar-module">
 				<h4>Friends List</h4>
-				
-				<ol class="list-unstyled">
+
+				<ol class="list-unstyled" id="friendlist">
 					<!-- <li><a href="#">Noh heeseok</a></li> -->
 					<!-- <li><a href="#">Pack gyerae</a></li> -->
 					<jsp:include page="friendlistResult.jsp" />

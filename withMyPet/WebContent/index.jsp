@@ -88,7 +88,7 @@ span.buttonText {
 
 		FB.getLoginStatus(function(response) {
 			if (response.status === 'connected') {
-				alert("LoginStatus -------");
+				//alert("LoginStatus -------");
 				FB.api('/me?fields=id,name,email', function(user) {
 					if (user) {
 						var image = document.getElementById('image');
@@ -129,7 +129,7 @@ span.buttonText {
 			//document.location.reload();
 			//로그인 하고서 main.jsp 연결
 			if (response.status === 'connected') {
-				alert("event.subscribe");				
+				//alert("event.subscribe");				
 				document.location.assign("main.jsp");
 		
  			}
