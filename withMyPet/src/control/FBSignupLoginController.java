@@ -19,7 +19,7 @@ import service.LoginService;
 import vo.Member;
 
 
-@Controller("/FBSignupLogin.do")
+@Controller("/fbSignupLogin.do")
 public class FBSignupLoginController{
 	@Autowired(required=true)
 	private MemberDAO dao;

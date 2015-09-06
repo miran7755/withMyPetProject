@@ -88,7 +88,7 @@ span.buttonText {
 
 		FB.getLoginStatus(function(response) {
 			if (response.status === 'connected') {
-				alert("LoginStatus -------");
+				//alert("LoginStatus -------");
 				FB.api('/me?fields=id,name,email', function(user) {
 					if (user) {
 						var image = document.getElementById('image');
@@ -129,7 +129,7 @@ span.buttonText {
 			//document.location.reload();
 			//로그인 하고서 main.jsp 연결
 			if (response.status === 'connected') {
-				alert("event.subscribe");				
+				//alert("event.subscribe");				
 				document.location.assign("main.jsp");
 		
  			}
@@ -218,7 +218,8 @@ span.buttonText {
 
 	<!-- /.parallax full screen background image -->
 	<div class="fullscreen landing parallax"
-		style="background-image: url('images/bg.jpg');" data-img-width="2000"
+
+		style="background-image: url('images/bg2.jpg');" data-img-width="2000"
 		data-img-height="1333" data-diff="100">
 		<div class="overlay">
 			<div class="container">
