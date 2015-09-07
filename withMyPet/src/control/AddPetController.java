@@ -61,7 +61,7 @@ public class AddPetController {
 			mav.addObject("msg", msg);
 			System.out.println("로그인 세션이 없습니다.");
 		}
-		mav.setViewName("/AddPet.jsp");
+		mav.setViewName("/addPet.jsp");
 		return mav;
 	}
 }

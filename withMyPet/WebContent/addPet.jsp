@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AddPet.jsp</title>
+<title>addPet.jsp</title>
 <script>
 
 window.alert('${msg}');

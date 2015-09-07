@@ -41,4 +41,12 @@ public class PetDAOOracle implements PetDAO {
 
 	}
 
+	@Override
+	public ArrayList<Pet> selectByEmail(String email) {
+		// TODO Auto-generated method stub
+		ArrayList<Pet> petList = new ArrayList<Pet>();
+		petList = (ArrayList)session.selectList("PetMapper.selectByEmail",email);
+		return petList;
+	}
+
 }

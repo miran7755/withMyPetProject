@@ -169,9 +169,6 @@
 				$.get(url, successFunction);
 			}
 		});
-	
-
-		
 
 		$("#petSignUpBtn").click(function(event) {
 			event.preventDefault();
@@ -261,7 +258,7 @@
 
 						<ul class="dropdown-menu">
 							<li><a data-toggle="modal" data-target="#myModal">Pet등록</a></li>
-
+							<li><a href="viewpet.do">나의 Pet 보기</a></li>
 							<li><a href="#">회원정보 수정</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="logout.do">Logout</a></li>
@@ -359,14 +356,14 @@
 							<p>
 
 								<!-- Single button -->
-							<div class="btn-group">	pet종류							
-									<select id="animalName">
-										<option value="1">개</option>
-										<option value="2">고양이</option>
-										<option value="3">앵무새</option>
-										
-									</select>
-								
+							<div class="btn-group">
+								pet종류 <select id="animalName">
+									<option value="1">개</option>
+									<option value="2">고양이</option>
+									<option value="3">앵무새</option>
+
+								</select>
+
 							</div>
 
 
