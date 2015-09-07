@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberMapper">
+	<!-- <resultMap id="resultCustomer" type="com.my.vo.Customer"> <result column="id" 
+		property="id"/> <result column="password" property="password"/> <result column="name" 
+		property="name"/> <result column="address" property="address"/> <result column="gender" 
+		property="gender"/> <result column="birth_date" property="birth_date"/> <association 
+		column="zip_idx" property="zip" javaType="com.my.vo.Zip"> <result column="zip_idx" 
+		property="idx"/> </association> </resultMap> -->
+
+
+	<!-- Pet 이름으로 검색 -->
+	<select id="selectByPetName" resultType="vo.Pet">
+		SELECT * FROM pet WHERE name = #{pet_name}
+	</select>
+	<!-- Pet 종으로 검색 -->
+	<!-- <select id="selectByPetKind" resultType="vo.Pet"> SELECT * FROM pet 
+		WHERE name = #{pet_name} </select> -->
+
+
+
+
+	<!-- Pet 등록 -->
+	<insert id="insert">
+		INSERT INTO PET(pet_no,e_mail,name,birthdate,gender,img,animal_code)
+		VALUES(PET_SEQ.NEXTVAL,#{e_mail},#{petName},#{birthdate},#{gender},#{image},#{animal_code});
+	</insert>
+
+
+</mapper>

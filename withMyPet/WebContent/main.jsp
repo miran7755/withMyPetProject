@@ -69,14 +69,15 @@
 						id.innerHTML = user.id; */
 						//var email = document.getElementById('email');
 						//var birthday = document.getElementById('birthday');
-						console.log("user.email : " + user.email);
+						//console.log("user.email : " + user.email);
 						//console.log(user.birthday);
 						//email=user.email;
-						email.innerHTML = user.email;
+						
 						//birthday.innerHTML = user.birthday;
 
 						var emailVal = user.email;
-						console.log("friendList email=>" + emailVal);
+						email.innerHTML = user.email;
+						//console.log("friendList email=>" + emailVal);
 						$.get("friendlist.do", "email=" + emailVal, function(
 								resultData) {
 							$("#friendlist").html(resultData);
@@ -87,8 +88,8 @@
 							"n_nickname" : user.name,
 							"n_pwd" : "fb"
 						});
-						console.log("email **** : " + user.email
-								+ " nickname ***  : " + user.name);
+						//console.log("email **** : " + user.email
+						//		+ " nickname ***  : " + user.name);
 					}
 
 				});
@@ -165,16 +166,33 @@
 				$.get(url, successFunction);
 			}
 		});
+	/* 	if (url.trim() != "") {
+			$.get(url, successFunction);
+		} */
 
-		$("#petSignUp").click(function(event) {
+	
+		$("#petSignUpBtn").click(function(event) {
 			event.preventDefault();
-
+			var petName = $("#petName").val();
+			var email2 =email; 
+			
+			var kindName = $("#kindName").val();
+			var gender = $(":input:radio[name=gender]:checked").val();
+			var image = $("#imagePath").val();
+			console.log(petName);
+			console.log(email);
+			$.post("addpet.do", {
+				"petName" : petName,
+				"kindName" : kindName,
+				"gender" : gender,
+				"image" : image
+				
+			});
 			alert("pet 등록");
 		});
 
-		if (url.trim() != "") {
-			$.get(url, successFunction);
-		}
+		
+
 	});
 
 	function successFunction(responseData) {
@@ -231,18 +249,21 @@
 					<li>
 						<div id="email"></div>
 					</li>
-					<li><i>${sessionScope.loginInfo.e_mail}</i>
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">회원정보 <span class="caret"></span></a>
+					<%-- <li><i>${sessionScope.loginInfo.e_mail}</i> --%>
+					<li class="dropdown">
+						<p class="dropdown-toggle" data-toggle="dropdown" role="button"
+							aria-haspopup="true" aria-expanded="false">
+							회원정보 <span class="caret"></span>
+						</p>
 
-						<ul class="dropdown-menu" id="friendlist">
+						<ul class="dropdown-menu">
 							<li><a data-toggle="modal" data-target="#myModal">Pet등록</a></li>
 
 							<li><a href="#">회원정보 수정</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="logout.do">Logout</a></li>
-						</ul></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -259,7 +280,7 @@
 						<img id="image" />
 						<div id="name"></div>
 						<div id="id"></div>
-						<div id="email"></div>
+						<!-- <div id="email"></div> -->
 						<div id="birthday"></div>
 
 					</div>
@@ -280,19 +301,42 @@
 				<h4>Friends List</h4>
 
 				<ol class="list-unstyled">
-				
+
 					<!-- <li><a href="#">Noh heeseok</a></li> -->
 					<!-- <li><a href="#">Pack gyerae</a></li> -->
 					<jsp:include page="friendlistResult.jsp" />
 
-					
+
 				</ol>
 			</div>
 		</div>
 	</div>
+	<!-- 	
+	
+	<div class="modal-dialog" id="kindSearchPopup" role="dialog">
+	
+	<div class="modal-dialog">
+	 
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	
+	<div class="modal-body">
+	
+	등록해주세요!
+	
+	
+	</div>
+	
+	
+	</div>
+	
+	</div> -->
+	<!-- </div> -->
+
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
+			<!-- <div class="modal bootstrap-dialog"> -->
 
 			<!-- Modal content-->
 			<div class="modal-content">
@@ -302,39 +346,33 @@
 				</div>
 				<div class="modal-body">
 					<div id="register" class="animate form">
-						<form action="hello.do" autocomplete="on">
+						<form action="hello.do" autocomplete="off">
 							<%-- <h1>Sign up</h1> --%>
 							<div>
-								<label for="usernamesignup" class="uname">Pet 이름 </label> <input
-									id="usernamesignup" class="form-control" name="usernamesignup"
+								<label for="petName" class="uname">Pet 이름 </label> <input
+									id="petName" class="form-control" name="petName"
 									required="required" type="text" placeholder="Pet이름을 등록하세요." />
 							</div>
 							<p>
 								<label for="petSearch" class="youmail"> 종</label> <input
-									id="emailsignup" name="emailsignup" required="required"
+									id="kindName" name="kindName" required="required"
 									class="form-control" type="text"
-									placeholder="마우스를 클릭해서 검색해주세요." />
+									placeholder="마우스를 클릭해서 검색해주세요." data-toggle="modal"
+									data-target="#kindSearchPopup" />
 							</p>
 							<p>
 								<label for="passwordsignup">성별 </label> <input type="radio"
-									name="gender">수컷
+									name="gender" value="M">수컷 <input type="radio"
+									name="gender" value="F">암컷
 							</p>
-							<div class="col-lg-6"></div>
-
-
-
+							<!-- <div class="col-lg-6"></div> -->
 							<p>
-								<label for="passwordsignup_confirm" class="youpasswd"
-									data-icon="p">Please confirm your password </label> <input
-									id="passwordsignup_confirm" name="passwordsignup_confirm"
-									required="required" type="password" placeholder="eg. X8df!90EO" />
+								프로필 사진 <input id="imagePath" name="image" type="file"
+									value="이미지 등록" /> <input name="imageConfirm" type="image"
+									value="등록">
 							</p>
 
 
-							<p class="change_link">
-								Already a member ? <a href="#tologin" class="to_register">
-									Go and log in </a>
-							</p>
 						</form>
 					</div>
 				</div>
@@ -342,7 +380,7 @@
 				<div class="modal-footer">
 					<form class="form-inline">
 						<div class="form-group">
-							<button id="petSignUp" type="button" class="btn btn-default"
+							<button id="petSignUpBtn" type="button" class="btn btn-default"
 								data-dismiss="modal">Pet 등록</button>
 						</div>
 						<div class="form-group">

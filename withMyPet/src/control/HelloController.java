@@ -15,9 +15,8 @@ public class HelloController{
 			HttpServletResponse arg1) throws Exception {
 		System.out.println("HelloController의 handleRequest()호출");
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("hi","안녕하세요");
 		mav.setViewName("/hello.jsp");
 		return mav;
-	}
-	
-	
+	}	
 }
