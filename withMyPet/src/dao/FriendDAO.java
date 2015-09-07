@@ -2,12 +2,14 @@ package dao;
 
 import java.util.ArrayList;
 
+import vo.Friend_list;
 import vo.Member;
 import exception.AddException;
 
 public interface FriendDAO {
-	public ArrayList<Member> selectFriend(String email) throws Exception;
-	public void insert(String email);
-	public void delete(String email);
+	public ArrayList<Friend_list> selectFriend(String email) throws Exception;
+	public void insert(Friend_list addFriend);
+	public void delete(Friend_list delFriend);
+	public ArrayList<Member> searchFriend(String search_email);
 
 }
