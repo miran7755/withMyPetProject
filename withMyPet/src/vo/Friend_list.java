@@ -80,7 +80,7 @@ public class Friend_list {
 
 	@Override
 	public String toString() {
-		return "Friend_list [friend_no=" + friend_no + ", e_mail=" + e_mail
+		return "\nFriend_list [friend_no=" + friend_no + ", e_mail=" + e_mail
 				+ ", friend_e_mail=" + friend_e_mail + ", reg_date=" + reg_date
 				+ ", img=" + img + ", nickname=" + nickname + "]";
 	}

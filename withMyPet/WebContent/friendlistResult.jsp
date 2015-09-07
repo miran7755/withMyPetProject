@@ -4,6 +4,9 @@
 <%@page import="java.util.ArrayList" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <%-- <c:set var="fl" value="${requestScope.fl}" />
 <c:set var="email" value="${requestParam.email}" />
 <c:set var="test" value="${requestScope.email}" />
@@ -15,9 +18,7 @@ $(document).ready(function(){
 	$("input[type=button]").click(function(){
 		var obj = $(this).val();
 		console.log("삭제할 이메일 : " + $(this).prop("id"));
-				
-		/* 		parent().parent().children().eq(3).html()); //button의 부모 td의 부모 tr
- 	    */
+
 		var e_mail=$(this).prop("id");
 		var url="delFriend.do";
 	    $.post(url,{"del_email": e_mail}, successFunction);

@@ -332,7 +332,9 @@
 
 	});
 
-
+	function successFunction(responseData) {
+		$("#aaa").html(responseData);
+	}
 	
 	
 	
@@ -408,11 +410,11 @@
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">회원정보 <span class="caret"></span></a>
-						<ul class="dropdown-menu" id="friendlist">
+						<ul class="dropdown-menu">
 							<li><a data-toggle="modal" data-target="#myModal">Pet등록</a></li>
 							<li><a href="#">회원정보 수정</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="#">Logout</a></li>
+							<li><a href="logout.do">Logout</a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -451,14 +453,16 @@
 			</div>
 			<div class="sidebar-module">
 				<h4>Friends List</h4>
+				<div id="friendlist">
 
 
-				<ol class="list-unstyled" id="friendlist">
+				<!-- <ol class="list-unstyled" id="friendlist"> -->
 					<!-- <li><a href="#">Noh heeseok</a></li> -->
 					<!-- <li><a href="#">Pack gyerae</a></li> -->
 					<jsp:include page="friendlistResult.jsp" />
 
-				</ol>
+				<!-- </ol> -->
+				</div>
 			</div>
 			<div class="sidebar-module">
 				<h4>Elsewhere</h4>
