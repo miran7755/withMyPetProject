@@ -15,6 +15,7 @@ window.alert('${msg}');
 </head>
 <body>
 	<p>펫 추가 결과 :</p>
+	
 	<c:out value="${msg }"></c:out>
 </body>
 </html>

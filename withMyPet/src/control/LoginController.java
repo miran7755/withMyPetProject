@@ -46,7 +46,7 @@ public class LoginController{
 		// System.out.println("###### try");
 		service.login(email, password);
 		Member m = dao.selectByEmail(email);
-		System.out.println("member......: " + m);
+		//System.out.println("member......: " + m);
 		session.setAttribute("loginInfo", m);
 
 		} catch (Exception e) {

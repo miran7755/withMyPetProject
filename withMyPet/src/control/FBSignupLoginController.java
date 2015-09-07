@@ -31,7 +31,7 @@ public class FBSignupLoginController{
 			HttpSession session) throws AddException{	
 
 		ModelAndView mav = new ModelAndView();
-		System.out.println("FB작동");
+		//System.out.println("FB작동");
 		
 		/*String id = request.getParameter("id");
 		String password = request.getParameter("pwd");*/
@@ -45,14 +45,14 @@ public class FBSignupLoginController{
 		msg = "가입이 완료되었습니다. 로그인하세요.";
 		dao.insert(m);
 		}
-		else{						//회원인 경우 Login Session 정보 넣어주기 
+		else{//회원인 경우 Login Session 정보 넣어주기 
 			msg = "이미 존재하는 아이디입니다. 로그인합니다.";
 		}
 		//LoginSession정보 넣어주기 
 		session.removeAttribute("loginInfo");
 		Member member = dao.selectByEmail(email);
 		session.setAttribute("loginInfo", member);
-		System.out.println("member&&&&&&" + member);
+		//System.out.println("member&&&&&&" + member);
 
 		mav.addObject("msg", msg);
 		String url = "/loginResult.jsp";

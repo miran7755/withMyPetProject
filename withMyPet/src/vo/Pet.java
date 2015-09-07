@@ -6,28 +6,36 @@ public class Pet extends Animal_detail{
 	private int pet_no;
 	private String e_mail;
 	private String name;
-	private Date birthdate;
-	private char gender;
+	private String birthdate;
+	private String gender;
 	private String img;	
 	private Date pet_reg_date;
-	
+	private int animal_code;
 	public Pet() {
 		super();
 		
 	}
-	
-	public Pet(int animal_code, String animal_name, int breed_code,
-			String breed_name, String e_mail, int pet_no, Date birthdate,
-			char gender, String img, String name, Date pet_reg_date) {
-		super(animal_code, animal_name, breed_code, breed_name);
-		this.e_mail = e_mail;
-		this.pet_no = pet_no;
-		this.birthdate = birthdate;
-		this.gender = gender;
-		this.img = img;
-		this.name = name;
-		this.pet_reg_date = pet_reg_date;
+
+
+	public int getAnimal_code() {
+		return animal_code;
 	}
+
+
+	public void setAnimal_code(int animal_code) {
+		this.animal_code = animal_code;
+	}
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 
 	public String getE_mail() {
 		return e_mail;
@@ -45,21 +53,19 @@ public class Pet extends Animal_detail{
 		this.pet_no = pet_no;
 	}
 
-	public Date getBirthdate() {
+	
+
+	
+
+	public String getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(Date birthdate) {
+
+	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
 
-	public char getGender() {
-		return gender;
-	}
-
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
 
 	public String getImg() {
 		return img;

@@ -10,6 +10,11 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 <!-- /.website title -->
 <title>With My Pet</title>
@@ -17,7 +22,7 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <!-- CSS Files -->
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<!-- <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
 <link href="css/font-awesome.min.css" rel="stylesheet">
 <link href="fonts/icon-7-stroke/css/pe-icon-7-stroke.css"
 	rel="stylesheet">
@@ -72,9 +77,7 @@
 						//console.log("user.email : " + user.email);
 						//console.log(user.birthday);
 						//email=user.email;
-						
 						//birthday.innerHTML = user.birthday;
-
 						var emailVal = user.email;
 						email.innerHTML = user.email;
 						//console.log("friendList email=>" + emailVal);
@@ -166,32 +169,32 @@
 				$.get(url, successFunction);
 			}
 		});
-	/* 	if (url.trim() != "") {
-			$.get(url, successFunction);
-		} */
-
 	
+
+		
+
 		$("#petSignUpBtn").click(function(event) {
 			event.preventDefault();
 			var petName = $("#petName").val();
-			var email2 =email; 
-			
-			var kindName = $("#kindName").val();
+			var email2 = email;
+
+			var animalCode = $("#animalName").val();
 			var gender = $(":input:radio[name=gender]:checked").val();
 			var image = $("#imagePath").val();
+			var birthdate = $("#birthdate").val();
 			console.log(petName);
-			console.log(email);
+			console.log(animalCode);
+			console.log(image);
 			$.post("addpet.do", {
 				"petName" : petName,
-				"kindName" : kindName,
+				"animalCode" : animalCode,
 				"gender" : gender,
-				"image" : image
-				
+				"image" : image,
+				"birthdate" : birthdate
+
 			});
 			alert("pet 등록");
 		});
-
-		
 
 	});
 
@@ -354,16 +357,35 @@
 									required="required" type="text" placeholder="Pet이름을 등록하세요." />
 							</div>
 							<p>
-								<label for="petSearch" class="youmail"> 종</label> <input
-									id="kindName" name="kindName" required="required"
-									class="form-control" type="text"
-									placeholder="마우스를 클릭해서 검색해주세요." data-toggle="modal"
-									data-target="#kindSearchPopup" />
-							</p>
+
+								<!-- Single button -->
+							<div class="btn-group">	pet종류							
+									<select id="animalName">
+										<option value="1">개</option>
+										<option value="2">고양이</option>
+										<option value="3">앵무새</option>
+										
+									</select>
+								
+							</div>
+
+
+
+							<!-- <label for="petSearch" class="youmail"></label> <input
+								id="kindName" name="kindName" required="required"
+								class="form-control" type="text" placeholder="마우스를 클릭해서 검색해주세요."
+								data-toggle="modal" data-target="#kindSearchPopup" disabled />
+							</p> -->
+
 							<p>
 								<label for="passwordsignup">성별 </label> <input type="radio"
 									name="gender" value="M">수컷 <input type="radio"
 									name="gender" value="F">암컷
+							</p>
+							<p>
+								<label for="birth">생년월일(ex.20150912)</label> <input
+									id="birthdate" type="text" class="form-control"
+									placeholder="20150912">
 							</p>
 							<!-- <div class="col-lg-6"></div> -->
 							<p>
@@ -422,8 +444,8 @@
 	</footer>
 
 	<!-- /.javascript files -->
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<!-- <script src="js/jquery.js"></script> -->
+	<!-- <script src="js/bootstrap.min.js"></script> -->
 	<script src="js/custom.js"></script>
 	<script src="js/jquery.sticky.js"></script>
 	<script src="js/wow.min.js"></script>
