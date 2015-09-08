@@ -22,27 +22,17 @@ public class PostDAOOracle implements PostDAO {
 	private SqlSession session;
 	
 	@Override
-	@Transactional
 	public void boardInsertPost(Post post, Media_tag media_tag) throws AddException{
 		System.out.println("in PostDAOOracle boardInsertPost");		
 		session.insert("BoardMapper.insertPost", post);
+		media_tag.setTag_name("null");
 		if(media_tag.getImg() == null){
 			media_tag.setImg("null");
-		}
-		if(media_tag.getTag_name() == null){
-			media_tag.setTag_name("null");
 		}
 		if(media_tag.getVideo() == null){
 			media_tag.setVideo("null");
 		}		
 		session.insert("BoardMapper.insertMedia", media_tag);
-	}
-	
-	@Override
-	public ArrayList<Post> boardSelectAll() throws Exception{
-		ArrayList<Post> list = new ArrayList<Post>();
-		list = (ArrayList)session.selectList("BoardMapper.selectAll");
-		return list;
 	}
 	
 	@Override
@@ -199,4 +189,36 @@ public class PostDAOOracle implements PostDAO {
 		session.update("BoardMapper.boardPostMsgUpdate", post);
 	}
 	
+	//------------------------아래부터 타임라인
+	
+	@Override
+	public ArrayList<Post> TimelineSelectAll() throws Exception{
+		ArrayList<Post> posts = new ArrayList<Post>();
+		posts = (ArrayList)session.selectList("TimelineMapper.selectAll");
+		return posts;
+	}
+	
+	@Override
+	public ArrayList<Media_tag> TimelineSelectAllMedia_tag() throws Exception{
+		ArrayList<Media_tag> media_tags = new ArrayList<Media_tag>();
+		media_tags = (ArrayList)session.selectList("TimelineMapper.selectAllMedia_tag");
+		return media_tags;
+	}
+	
+	@Override
+	public void timelineInsertPost(Post post, Media_tag media_tag) throws AddException{
+		System.out.println("in PostDAOOracle boardInsertPost");		
+		post.setSubject(null);
+		session.insert("TimelineMapper.insertPost", post);
+		if(media_tag.getImg() == null){
+			media_tag.setImg("null");
+		}
+		if(media_tag.getTag_name() == null){
+			media_tag.setTag_name("null");
+		}
+		if(media_tag.getVideo() == null){
+			media_tag.setVideo("null");
+		}		
+		session.insert("TimelineMapper.insertMedia", media_tag);
+	}
 }

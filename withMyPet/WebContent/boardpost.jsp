@@ -48,7 +48,9 @@
 		<td><input type="file" class="multi" accept="mp4|avi" name="video"></td>
 	</tr>
 	<tr> 
-		<td colspan="2"><textarea id="msg" class="form-control" placeholder="내용을 입력하세요." rows="3" required/></td> 
+		<td colspan="2">
+			<textarea id="msg" class="form-control" placeholder="내용을 입력하세요." rows="3" required="required"></textarea>
+		</td> 
 	</tr>
 	<tr>
 		<td><input type="button" id="write" value="글작성하기"></td>

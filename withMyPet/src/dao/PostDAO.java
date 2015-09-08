@@ -21,12 +21,6 @@ public interface PostDAO {
 	 */
 	void boardInsertPost(Post post, Media_tag media_tag) throws AddException;
 	/**
-	 * 게시판 전체목록 보기
-	 * @return
-	 * @throws Exception
-	 */
-	ArrayList<Post> boardSelectAll() throws Exception;
-	/**
 	 * 게시판 전체목록 보기에서 페이지빈 추가한다.
 	 * @param cntPerPage
 	 * @param currentPage
@@ -150,6 +144,28 @@ public interface PostDAO {
 	 * 게시글을 수정한다.
 	 * @param post
 	 */
-	void boardPostUpdate(Post post);	
+	void boardPostUpdate(Post post);
+	//----------------------------------------여기부터 아래쪽은 타임라인
+	/**
+	 * 타임라인 전체목록 보기
+	 * @return
+	 * @throws Exception
+	 */
+	ArrayList<Post> TimelineSelectAll() throws Exception;
+	/**
+	 * 타임라인 사진, 동영상, 태그를 검색해온다.
+	 * @return
+	 * @throws Exception
+	 */
+	ArrayList<Media_tag> TimelineSelectAllMedia_tag() throws Exception;
+	/**
+	 * 타임라인에 게시물을 게시한다.
+	 * @param post
+	 * @param media_tag
+	 * @throws AddException
+	 */
+	void timelineInsertPost(Post post, Media_tag media_tag) throws AddException;
+	
+	
 
 }

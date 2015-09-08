@@ -21,7 +21,7 @@
 <body>
 	<h1 class="text-center">지식IN</h1>
 	<jsp:include page="searchForm.jsp"/>
-	<table class="table table-striped text-center" width="650">
+	<table class="table table-striped text-center table table-hover" width="650">
 		<tr><td>순번</td><td>제목</td><td>작성자</td><td>작성시간</td><td>좋아요</td><td>싫어요</td></tr>
 		<c:forEach var="list" items="${requestScope.pb.list }" varStatus="status">
 			<tr>

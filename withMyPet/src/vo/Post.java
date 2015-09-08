@@ -22,7 +22,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post [post_no=" + post_no + ", subject=" + subject
+		return "\nPost [post_no=" + post_no + ", subject=" + subject
 				+ ", member=" + member + ", msg=" + msg + ", hate_count="
 				+ hate_count + ", like_count=" + like_count + ", post_date="
 				+ post_date + ", tb_flag=" + tb_flag + "]";
