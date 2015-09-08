@@ -11,9 +11,9 @@
 	</resultMap> -->
 		
 	<!-- 내 친구 리스트  -->
-	<select id="selectFriend" resultType="Friend_list">
+	<select id="selectFriend" resultType="vo.Friend_list">
 	<!-- SELECT * FROM friend_list WHERE e_mail = #{email} -->
-	SELECT fl.FRIEND_E_MAIL, m.nickname, m.img
+	SELECT fl.e_mail, fl.FRIEND_E_MAIL, m.nickname, m.img
 	FROM friend_list fl JOIN member m 
 	ON fl.friend_e_mail = m.e_mail 
 	WHERE fl.e_mail = #{email}
@@ -26,7 +26,7 @@
 	</insert>
 	
 	<!-- 친구 찾기  -->
-	<select id="searchFriend" resultType="Member">
+	<select id="searchFriend" resultType="vo.Member">
 	SELECT * FROM member WHERE e_mail like #{search_email}
 	</select>
  	

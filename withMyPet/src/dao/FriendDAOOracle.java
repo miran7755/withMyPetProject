@@ -18,7 +18,6 @@ public class FriendDAOOracle implements FriendDAO {
 	@Override
 	public ArrayList<Friend_list> selectFriend(String email) throws Exception {
 		ArrayList<Friend_list> fl = (ArrayList) session.selectList("FriendMapper.selectFriend", email);
-		System.out.println("DAO fl값 : " +fl);
 		return fl;
 	}
 
