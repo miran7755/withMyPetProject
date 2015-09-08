@@ -23,7 +23,6 @@ public class BoardReplyListController{
 	@RequestMapping
 	public ModelAndView execute(@ModelAttribute ArrayList<Reply> replys,
 								@ModelAttribute Post post,
-								@ModelAttribute Media_tag media_tag,
 								HttpSession session){
 		System.out.println("in BoardReplyListController");
 		ModelAndView mav = new ModelAndView();
@@ -34,9 +33,8 @@ public class BoardReplyListController{
 			mav.addObject("replys", replys);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
-		
+		}				
+
 		mav.setViewName(url);
 		return mav;
 	}

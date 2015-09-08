@@ -10,10 +10,31 @@ public class Member{
 	private char gender;
 	private Date birthdate;
 	private Date reg_date;
-	private char bl_flag;
+	private int bl_flag;
 	
-	public Member(){
+	public Member() {
+		super();
+	}
 
+	@Override
+	public String toString() {
+		return "Member [e_mail=" + e_mail + ", password=" + password + ", img="
+				+ img + ", nickname=" + nickname + ", gender=" + gender
+				+ ", birthdate=" + birthdate + ", reg_date=" + reg_date
+				+ ", bl_flag=" + bl_flag + "]";
+	}
+
+	public Member(String e_mail, String password, String img, String nickname,
+			char gender, Date birthdate, Date reg_date, int bl_flag) {
+		super();
+		this.e_mail = e_mail;
+		this.password = password;
+		this.img = img;
+		this.nickname = nickname;
+		this.gender = gender;
+		this.birthdate = birthdate;
+		this.reg_date = reg_date;
+		this.bl_flag = bl_flag;
 	}
 
 	public String getE_mail() {
@@ -72,37 +93,14 @@ public class Member{
 		this.reg_date = reg_date;
 	}
 
-	public char getBl_flag() {
+	public int getBl_flag() {
 		return bl_flag;
 	}
 
-	public void setBl_flag(char bl_flag) {
+	public void setBl_flag(int bl_flag) {
 		this.bl_flag = bl_flag;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((e_mail == null) ? 0 : e_mail.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Member other = (Member) obj;
-		if (e_mail == null) {
-			if (other.e_mail != null)
-				return false;
-		} else if (!e_mail.equals(other.e_mail))
-			return false;
-		return true;
-	}
+	
+	
 
 }

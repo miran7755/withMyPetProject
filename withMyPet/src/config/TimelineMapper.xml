@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TimelineMapper">
+	<resultMap id="resultPost" type="vo.Post">
+		<result column="post_no" property="post_no" />
+		<result column="subject" property="subject" />
+		<result column="post_date" property="post_date" />
+		<result column="hate_count" property="hate_count" />
+		<result column="like_count" property="like_count" />
+		<result column="msg" property="msg" />
+		<result column="tb_flag" property="tb_flag" />
+		<association property="member" javaType="vo.Member">
+			<result column="e_mail" property="e_mail" />
+		</association>
+	</resultMap>    
+	
+
+
+
+
+
+	<select id="selectAll" resultMap="resultPost">
+		SELECT post_no, subject, e_mail, post_date, like_count, hate_count, msg 
+		FROM post 
+		WHERE tb_flag = 't'
+   		ORDER BY post_no DESC
+	</select>
+	<select id="selectAllMedia_tag" resultType="vo.Media_tag">
+		SELECT post_no, tag_name, img, video
+		FROM media_tag 
+		ORDER BY post_no DESC
+	</select>
+	<insert id="insertPost" >
+		INSERT INTO post( post_no, e_mail, msg, tb_flag ) 
+		VALUES ( post_seq.NEXTVAL, #{member.e_mail}, #{msg}, #{tb_flag} )
+	</insert>
+	<insert id="insertMedia" >		
+		INSERT INTO media_tag( post_no, tag_name, img, video )
+		VALUES( post_seq.CURRVAL, #{tag_name}, #{img}, #{video} )			
+	</insert>
+	
+	<!-- <insert id="insertPost" >
+		INSERT INTO post( post_no, subject, e_mail, msg, tb_flag ) 
+		VALUES ( post_seq.NEXTVAL, #{subject}, #{member.e_mail}, #{msg}, #{tb_flag} )
+	</insert>
+	<insert id="insertMedia" >		
+		INSERT INTO media_tag( post_no, tag_name, img, video )
+		VALUES( post_seq.CURRVAL, #{tag_name}, #{img}, #{video} )			
+	</insert>
+	<select id="selectAll" resultMap="resultPost">
+		SELECT post_no, subject, e_mail, post_date, like_count, hate_count
+		FROM post 
+		ORDER BY post_no DESC
+	</select>
+	<select id="selectAllPage" parameterType="hashmap" resultMap="resultPost">
+		SELECT * 
+		FROM (SELECT ROWNUM rn, a.*  
+ 			  FROM (SELECT post_no, subject, e_mail, post_date, like_count, hate_count, tb_flag 
+  					FROM post
+  					WHERE tb_flag = 'b'
+  					ORDER BY post_no DESC) a
+			 ) 
+ 		WHERE rn BETWEEN startRow( #{currentPage},  #{cntPerPage} ) AND endRow( #{currentPage}, #{cntPerPage} )     
+  	</select>
+	<select id="getTotalCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM post
+		WHERE tb_flag = 'b'
+	</select>
+	<select id="selectBySubject" resultMap="resultPost">
+		SELECT post_no, subject, like_count, hate_count, e_mail, post_date 
+		FROM post 
+		WHERE subject LIKE #{value} AND tb_flag = 'b'
+		ORDER BY post_no DESC
+	</select>
+	<select id="selectByEmail" resultMap="resultPost">
+		SELECT post_no, subject, e_mail, post_date, like_count, hate_count
+		FROM post 
+		WHERE e_mail = #{value} AND tb_flag = 'b'
+		ORDER BY post_no DESC
+	</select>
+	<select id="postDetail" resultMap="resultPost">
+		SELECT post_no, subject, hate_count, like_count, e_mail, msg, post_date 
+		FROM post
+		WHERE post_no = #{post_no}
+	</select>
+	<select id="media_tagDetail" resultType="vo.Media_tag">
+		SELECT post_no, img, video
+		FROM media_tag
+		WHERE post_no = #{post_no}
+	</select>
+	<update id="likeCount">
+		UPDATE post
+		SET like_count = #{like_count}
+    	WHERE post_no = #{post_no}		
+	</update>
+	<update id="hateCount">
+		UPDATE post
+		SET hate_count = #{hate_count}
+    	WHERE post_no = #{post_no}		
+	</update>
+	<insert id="insertReply">
+		INSERT INTO reply(post_no, reply_no, reply_email, msg, reply_date, like_count, img)
+    	VALUES(#{post_no}, reply_seq.NEXTVAL, #{reply_email}, #{msg}, SYSDATE, #{like_count}, #{img})
+	</insert>
+	<select id="selectReply" resultType="vo.Reply">
+		SELECT reply_no, msg, like_count, reply_email, reply_date, post_no, img
+    	FROM reply
+    	WHERE post_no = #{post_no}
+    	ORDER BY reply_date desc
+	</select>
+	<update id="replyLikeCount">
+		UPDATE reply
+		SET like_count = #{like_count}
+    	WHERE reply_no = #{reply_no} AND post_no = #{post_no}		
+	</update>
+	<select id="selectReplyLikeCount" resultType="int">
+		SELECT like_count
+		FROM reply
+		WHERE reply_no = #{reply_no} AND post_no = #{post_no}
+	</select>
+	<insert id="report">
+		INSERT INTO report(report_no, post_no, reply_no, reporter_email, reported_email, report_kind, report_date)
+		VALUES(report_seq.NEXTVAL, #{post_no}, #{reply_no}, #{reporter_email}, #{reported_email}, #{report_kind}, SYSDATE)
+	</insert>			
+	<select id="reportCount" resultType="int">
+		SELECT COUNT(*)
+		FROM report
+		WHERE reported_email = #{reported_email}
+	</select>
+	<insert id="insertBlackList">
+		INSERT INTO blacklist(blacklist_no, e_mail, bl_date, bl_release)
+		VALUES(blacklist_seq.NEXTVAL, #{e_mail}, SYSDATE, SYSDATE + 30 )
+	</insert>
+	<delete id="deleteBlackList">
+		DELETE FROM blacklist
+		WHERE e_mail = #{e_mail}		
+	</delete>
+	<update id="updateBlFlag">
+		UPDATE member
+		SET bl_flag = #{bl_flag}
+		WHERE e_mail = #{e_mail}
+	</update>
+	<select id="selectByMember" resultType="vo.Member">
+		SELECT *
+		FROM member
+		WHERE e_mail = #{e_mail}		
+	</select>
+	<select id="selectByBlacklist" parameterType="String" resultType="vo.Blacklist">
+		SELECT *
+		FROM blacklist
+		WHERE e_mail = #{e_mail}
+	</select>
+	<delete id="boardDelete">
+		DELETE FROM post
+		WHERE post_no = #{post_no}		
+	</delete>
+	<delete id="boardReplyDelete">
+		DELETE FROM reply
+		WHERE post_no = #{post_no} AND reply_no = #{reply_no}		
+	</delete>
+	<update id="boardPostSubjectUpdate">
+		UPDATE post
+		SET subject = #{subject}
+		WHERE post_no = #{post_no}		
+	</update>
+	<update id="boardPostMsgUpdate">
+		UPDATE post
+		SET msg = #{msg}
+		WHERE post_no = #{post_no}		
+	</update> -->
+</mapper>

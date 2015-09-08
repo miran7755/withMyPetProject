@@ -8,12 +8,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <title>addFriendResult.jsp</title>
 <script>
-
-
 	alert('${requestScope.msg}');
 location.href='${pageContext.request.contextPath}/main.jsp';
-
-
 </script>
 </head>
 <body>

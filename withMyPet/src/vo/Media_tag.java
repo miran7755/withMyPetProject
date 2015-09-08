@@ -43,5 +43,11 @@ public class Media_tag {
 		this.video = video;
 	}
 
+	@Override
+	public String toString() {
+		return "\nMedia_tag [post_no=" + post_no + ", tag_name=" + tag_name
+				+ ", img=" + img + ", video=" + video + "]";
+	}
+
 
 }

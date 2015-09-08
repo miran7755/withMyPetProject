@@ -5,13 +5,44 @@ public class Friend_list {
 	private String e_mail;
 	private String friend_e_mail;
 	private String reg_date;
+	private String img;
+	private String nickname;
 
 	public Friend_list() {
 
 	}
 
 
-	
+
+
+	public String getImg() {
+		return img;
+	}
+
+
+
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+
+
+
+	public String getNickname() {
+		return nickname;
+	}
+
+
+
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+
+
+
 	public int getFriend_no() {
 		return friend_no;
 	}
@@ -43,5 +74,22 @@ public class Friend_list {
 	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "\nFriend_list [friend_no=" + friend_no + ", e_mail=" + e_mail
+				+ ", friend_e_mail=" + friend_e_mail + ", reg_date=" + reg_date
+				+ ", img=" + img + ", nickname=" + nickname + "]";
+	}
+
+
+
+	
+
+	
+	
 
 }

@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import vo.Blacklist;
 import vo.Media_tag;
+import vo.Member;
 import vo.Post;
 import vo.Reply;
+import vo.Report;
 import exception.AddException;
 
 @Repository("postDAO")
@@ -19,28 +22,17 @@ public class PostDAOOracle implements PostDAO {
 	private SqlSession session;
 	
 	@Override
-	@Transactional
 	public void boardInsertPost(Post post, Media_tag media_tag) throws AddException{
-		System.out.println("in PostDAOOracle insertAll");		
-		session.insert("BoardMapper.insertAll", post);
+		System.out.println("in PostDAOOracle boardInsertPost");		
+		session.insert("BoardMapper.insertPost", post);
+		media_tag.setTag_name("null");
 		if(media_tag.getImg() == null){
-			media_tag.setImg(null);
-		}
-		if(media_tag.getTag_name() == null){
-			media_tag.setTag_name("null");
+			media_tag.setImg("null");
 		}
 		if(media_tag.getVideo() == null){
 			media_tag.setVideo("null");
 		}		
-		System.out.println(media_tag.getImg() + "" + media_tag.getVideo());
-		session.insert("BoardMapper.insertMedia", null);
-	}
-	
-	@Override
-	public ArrayList<Post> boardSelectAll() throws Exception{
-		ArrayList<Post> list = new ArrayList<Post>();
-		list = (ArrayList)session.selectList("BoardMapper.selectAll");
-		return list;
+		session.insert("BoardMapper.insertMedia", media_tag);
 	}
 	
 	@Override
@@ -123,7 +115,110 @@ public class PostDAOOracle implements PostDAO {
 		System.out.println("in PostDAOOracle replyLikeCount()");
 		session.update("BoardMapper.replyLikeCount", reply);		
 	}
+
+	@Override
+	public int selectReplyLikeCount(Reply reply) {
+		System.out.println("in PostDAOOracle selectReplyLikeCount()");
+		int like_count = session.selectOne("BoardMapper.selectReplyLikeCount", reply);
+		return like_count;
+	}
 	
+	@Override
+	public void report(Report report) {
+		System.out.println("in PostDAOOracle report()");
+		session.insert("BoardMapper.report", report);
+	}
+	
+	@Override
+	public int reportCount(Report report) {
+		System.out.println("in PostDAOOracle reportCount()");
+		int report_count = session.selectOne("BoardMapper.reportCount", report);
+		return report_count;
+	}
+	
+	@Override
+	public void insertBlackList(Blacklist blacklist) {
+		System.out.println("in PostDAOOracle insertBlackList()");
+		session.insert("BoardMapper.insertBlackList", blacklist);
+	}
+	
+	@Override
+	public void deleteBlackList(String e_mail) {
+		System.out.println("in PostDAOOracle deleteBlackList()");
+		session.delete("BoardMapper.deleteBlackList", e_mail);
+	}
+	
+	@Override
+	public void updateBlFlag(Member member) {
+		System.out.println("in PostDAOOracle updateBlFlag()");
+		session.update("BoardMapper.updateBlFlag", member);
+	}
 
-
+	@Override
+	public Member selectByMember(String reported_email) {
+		System.out.println("in PostDAOOracle selectByMember()");
+		Member member = new Member();
+		member = session.selectOne("BoardMapper.selectByMember", reported_email);
+		return member;
+	}
+	
+	@Override
+	public Blacklist selectByBlacklist(String e_mail) {
+		System.out.println("in PostDAOOracle selectByBlacklist()");
+		Blacklist blacklist= new Blacklist();
+		blacklist = session.selectOne("BoardMapper.selectByBlacklist", e_mail);
+		return blacklist;
+	}
+	
+	@Override
+	public void boardDelete(int post_no) {
+		System.out.println("in PostDAOOracle boardDelete()");
+		session.delete("BoardMapper.boardDelete", post_no);
+	}
+	
+	@Override
+	public void boardReplyDelete(Reply reply) {
+		System.out.println("in PostDAOOracle boardReplyDelete()");
+		session.delete("BoardMapper.boardReplyDelete", reply);
+	}
+	
+	@Override
+	public void boardPostUpdate(Post post) {
+		System.out.println("in PostDAOOracle boardPostUpdate()");
+		session.update("BoardMapper.boardPostSubjectUpdate", post);
+		session.update("BoardMapper.boardPostMsgUpdate", post);
+	}
+	
+	//------------------------아래부터 타임라인
+	
+	@Override
+	public ArrayList<Post> TimelineSelectAll() throws Exception{
+		ArrayList<Post> posts = new ArrayList<Post>();
+		posts = (ArrayList)session.selectList("TimelineMapper.selectAll");
+		return posts;
+	}
+	
+	@Override
+	public ArrayList<Media_tag> TimelineSelectAllMedia_tag() throws Exception{
+		ArrayList<Media_tag> media_tags = new ArrayList<Media_tag>();
+		media_tags = (ArrayList)session.selectList("TimelineMapper.selectAllMedia_tag");
+		return media_tags;
+	}
+	
+	@Override
+	public void timelineInsertPost(Post post, Media_tag media_tag) throws AddException{
+		System.out.println("in PostDAOOracle boardInsertPost");		
+		post.setSubject(null);
+		session.insert("TimelineMapper.insertPost", post);
+		if(media_tag.getImg() == null){
+			media_tag.setImg("null");
+		}
+		if(media_tag.getTag_name() == null){
+			media_tag.setTag_name("null");
+		}
+		if(media_tag.getVideo() == null){
+			media_tag.setVideo("null");
+		}		
+		session.insert("TimelineMapper.insertMedia", media_tag);
+	}
 }

@@ -16,7 +16,7 @@ window.alert('${ requestScope.msg}');
 <c:choose>
 <c:when test="${empty sessionScope.loginInfo}">
 <script>
-location.href = '${pageContext.request.contextPath}/index2.jsp';
+location.href = '${pageContext.request.contextPath}/index.jsp';
 </script>
 </c:when>
 <c:otherwise>

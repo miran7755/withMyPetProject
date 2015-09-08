@@ -26,42 +26,50 @@ public class AddFriendController {
 								@ModelAttribute Member member,
 								@RequestParam("add_email") String add_email,
 								HttpSession session  ){
-		
-		
+		System.out.println("in AddFriendController");		
 		ModelAndView mav = new ModelAndView();
 		String msg = "";
+		
 		friend_list.setFriend_e_mail(add_email);
 		
 		member = (Member) session.getAttribute("loginInfo");
 		friend_list.setE_mail(member.getE_mail());
 		
+		if(add_email.equals(member.getE_mail())){
+			msg = "자신을 친구로 추가할 수 없습니다.";
+			String url = "/addFriendResult.jsp";
+			mav.addObject("msg", msg);
+			mav.setViewName(url);
+			return mav;
+		}
+		
 		int cnt = 0;
 		try {
 			ArrayList<Friend_list> check_friend = (ArrayList) dao.selectFriend(member.getE_mail());
-			System.out.println("친구확인  ==="+ check_friend);
-			for(int i=0; i>check_friend.size(); i++){
-				if(check_friend.get(i).getE_mail().equals(add_email)){
+
+			for(int i = 0; i < check_friend.size(); i++){
+				if(check_friend.get(i).getFriend_e_mail().equals(add_email)){
+					System.out.println("cnt = " + cnt);
 					++cnt;
+					System.out.println("cnt = " + cnt);
 					break;
 				}
 			}
 			if(cnt > 0){
 				msg = "이미 팔로우 중인 친구입니다.";
+				mav.addObject("msg", msg);
 			}else{
 				dao.insert(friend_list);	
 				msg = "친구로 추가되었습니다. ";
-			}
-			
-			
+				mav.addObject("msg", msg);
+			}			
 		} catch (Exception e1) {
 			e1.printStackTrace();
-		}
-		
-		
-		mav.addObject("msg", msg);
+		}		
+				
 		String url = "/addFriendResult.jsp";
 		mav.setViewName(url);
-		//System.out.println(mav);
+		
 		return mav;
 	}
 	

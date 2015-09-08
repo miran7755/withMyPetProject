@@ -16,27 +16,12 @@ $(document).ready(function(){
 		var e_mail = $(this).prop("id");
 		var url="addFriend.do";
 	    $.post(url,{"add_email": e_mail}, successFunction);
-	    });
-	});
-
+    });
+});
 </script>
 <html>
 
 <body>
-	<%-- <ul class="list-nonstyled">
-
-		<li>${friendlist.Member.e_mail }</li>
-		<c:forEach var="f" items="${sf}">
-			<div>${f.img}</div>
-			<div>${f.nickname}</div>
-			<div>${f.e_mail }</div>
-
-		</c:forEach>
-		<!-- <li>김미란</li> -->
-		<!-- <li>노희석</li> -->
-	</ul> --%>
-	
-<!-- <form action="addFriend.do" method="post"> -->	
 	<table class="table">
 		<tr>
 			<th>썸네일 </th>

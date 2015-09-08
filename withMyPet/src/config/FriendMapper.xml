@@ -3,19 +3,39 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="FriendMapper">
-
-
+<!-- <resultMap id="resultOrderLine" type="com.my.vo.OrderLine">
+		<result column="order_info_no" property="order_no"/>
+		<result column="order_line_no" property="order_line_no"/>
+		<result column="quantity" property="quantity"/>
+		<association property="product" resultMap="ProductMapper.p"></association>
+	</resultMap> -->
 		
-	<!-- 친구 찾기  -->
-	<select id="selectFriend" resultType="vo.Member">
-	SELECT * FROM friend_list WHERE e_mail = #{email}
+	<!-- 내 친구 리스트  -->
+	<select id="selectFriend" resultType="vo.Friend_list">
+	<!-- SELECT * FROM friend_list WHERE e_mail = #{email} -->
+	SELECT fl.e_mail, fl.FRIEND_E_MAIL, m.nickname, m.img
+	FROM friend_list fl JOIN member m 
+	ON fl.friend_e_mail = m.e_mail 
+	WHERE fl.e_mail = #{email}
 	</select>
+
+
+
 
 	<!-- 친구 추가  -->
 	<insert id="insert">
-	INSERT INTO member(e_mail, nickname, password) 
-	VALUES(#{e_mail}, #{nickname}, #{password})
+	INSERT INTO friend_list(friend_no, e_mail, friend_e_mail) 
+	VALUES (friend_seq.NEXTVAL, #{e_mail}, #{friend_e_mail})
 	</insert>
- 
+	
+	<!-- 친구 찾기  -->
+	<select id="searchFriend" resultType="vo.Member">
+	SELECT * FROM member WHERE e_mail like #{search_email}
+	</select>
+ 	
+ 	<!-- 친구 삭제  -->
+ 	<delete id="deleteFriend">
+ 	DELETE FROM friend_list WHERE e_mail = #{e_mail} and FRIEND_E_MAIL = #{friend_e_mail}
+ 	</delete>
   
 </mapper>
