@@ -19,6 +19,9 @@
 	WHERE fl.e_mail = #{email}
 	</select>
 
+
+
+
 	<!-- 친구 추가  -->
 	<insert id="insert">
 	INSERT INTO friend_list(friend_no, e_mail, friend_e_mail) 
