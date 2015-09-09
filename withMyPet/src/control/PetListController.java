@@ -26,7 +26,7 @@ public class PetListController {
 		b= (Member)session.getAttribute("loginInfo");
 		petList= dao.selectByEmail(b.getE_mail());		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("petlist",petList);
+		mav.addObject("petList",petList);
 		String url="viewPet.jsp";
 		mav.setViewName(url);
 		return mav;

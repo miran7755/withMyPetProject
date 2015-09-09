@@ -152,7 +152,6 @@
 							},
 							function(response) {
 								document.getElementById('userInfo').innerHTML += ('<img src="' + response[0].pic_square + '"> ' + response[0].name);
-
 							});
 		}
 
@@ -192,9 +191,11 @@
 			});
 			alert("pet 등록");
 		});
+	
 
 	});
 
+	
 	function successFunction(responseData) {
 		$("#aaa").html(responseData);
 	}
@@ -376,13 +377,13 @@
 
 							<p>
 								<label for="passwordsignup">성별 </label> <input type="radio"
-									name="gender" value="M">수컷 <input type="radio"
+									name="gender" value="M" checked>수컷 <input type="radio"
 									name="gender" value="F">암컷
 							</p>
 							<p>
-								<label for="birth">생년월일(ex.20150912)</label> <input
+								<label for="birth">생년월일(ex.2015-09-12)</label> <input
 									id="birthdate" type="text" class="form-control"
-									placeholder="20150912">
+									placeholder="2015-09-12">
 							</p>
 							<!-- <div class="col-lg-6"></div> -->
 							<p>

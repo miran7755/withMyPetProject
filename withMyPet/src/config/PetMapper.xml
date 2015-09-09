@@ -22,8 +22,10 @@
 		WHERE name = #{pet_name} </select> -->
 	<!-- 이메일로 pet 검색 -->
 	<select id="selectByEmail" resultType="vo.Pet">
-		SELECT * FROM pet WHERE e_mail=#{email}
+		SELECT * FROM pet 
+		WHERE e_mail=#{email}
 	</select>
+
 
 
 
@@ -33,6 +35,9 @@
 		PET(pet_no,e_mail,name,birthdate,gender,img,animal_code)
 		VALUES(PET_SEQ.NEXTVAL,#{e_mail},#{name},#{birthdate},#{gender},#{img},#{animal_code})
 	</insert>
+	<delete id="deleteByPetNo">
+		DELETE FROM PET WHERE pet_no=#{pet_no}
 
+	</delete>
 
 </mapper>
