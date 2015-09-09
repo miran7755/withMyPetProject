@@ -16,11 +16,6 @@
 		</association>
 	</resultMap>    
 	
-
-
-
-
-
 	<select id="selectAll" resultMap="resultPost">
 		SELECT post_no, subject, e_mail, post_date, like_count, hate_count, msg 
 		FROM post 
@@ -38,7 +33,7 @@
 	</insert>
 	<insert id="insertMedia" >		
 		INSERT INTO media_tag( post_no, tag_name, img, video )
-		VALUES( post_seq.CURRVAL, #{tag_name}, #{img}, #{video} )			
+		VALUES( media_seq.NEXTVAL, #{tag_name}, #{img}, #{video} )			
 	</insert>
 	
 	<!-- <insert id="insertPost" >
