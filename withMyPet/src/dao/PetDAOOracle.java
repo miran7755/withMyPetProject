@@ -49,4 +49,10 @@ public class PetDAOOracle implements PetDAO {
 		return petList;
 	}
 
+	@Override
+	public void deleteByPetNo(int petNo) {
+		// TODO Auto-generated method stub
+		session.delete("PetMapper.deleteByPetNo",petNo);
+	}
+
 }

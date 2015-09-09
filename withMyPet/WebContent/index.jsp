@@ -362,8 +362,13 @@ span.buttonText {
 
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 =======
 >>>>>>> master
+=======
+
+
+>>>>>>> origin/HeeSeok
 	<!-- /.footer -->
 	<footer id="footer">
 		<div class="container">

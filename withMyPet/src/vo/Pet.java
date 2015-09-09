@@ -89,6 +89,15 @@ public class Pet extends Animal_detail{
 
 	public void setPet_reg_date(Date pet_reg_date) {
 		this.pet_reg_date = pet_reg_date;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Pet [pet_no=" + pet_no + ", e_mail=" + e_mail + ", name="
+				+ name + ", birthdate=" + birthdate + ", gender=" + gender
+				+ ", img=" + img + ", pet_reg_date=" + pet_reg_date
+				+ ", animal_code=" + animal_code + "]";
 	}	
 	
 	

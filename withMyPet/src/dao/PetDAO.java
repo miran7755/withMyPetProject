@@ -14,4 +14,5 @@ public interface PetDAO {
 	public void delete(Pet p) throws DeleteException;
 	public void revise(Pet p) throws UpdateException;
 	public ArrayList<Pet> selectByEmail(String email);
+	public void deleteByPetNo(int petNo);
 }
