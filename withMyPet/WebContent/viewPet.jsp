@@ -11,7 +11,6 @@
 <title>viewPet.jsp</title>
 </head>
 <script>
-
 $(document).ready(function(){
 	//alert("kkkk");
 	$("input[type=button]").click(function(){
@@ -53,7 +52,6 @@ $(document).ready(function(){
 <%-- 	<div class="row">
 		<div class="col-md-12">
 			<div class="slider-module">
-
 				<ul class="list-nonstyled" >
 				<c:out value="${petlist}"/>
 					<c:forEach var="pl" items="${petlist}">

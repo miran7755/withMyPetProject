@@ -13,7 +13,7 @@ location.href="productList.do";
 
 window.alert('${requestScope.msg}');
 //location.href="productlist.do";
-location.href='${pageContext.request.contextPath}/index2.jsp';
+location.href='${pageContext.request.contextPath}/index.jsp';
 
 </script>
 </head>

@@ -5,29 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<<<<<<< HEAD
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-=======
->>>>>>> master
-
-	
 <!-- /.website title -->
 <title>With My Pet</title>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <!-- CSS Files -->
-<!-- <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/font-awesome.min.css" rel="stylesheet">
-<link href="fonts/icon-7-stroke/css/pe-icon-7-stroke.css"
-	rel="stylesheet">
+<link href="fonts/icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet">
 <link href="css/animate.css" rel="stylesheet" media="screen">
 <link href="css/owl.theme.css" rel="stylesheet">
 <link href="css/owl.carousel.css" rel="stylesheet">
@@ -41,333 +28,120 @@
 <!-- <link href="css/css-index-yellow.css" rel="stylesheet" media="screen"> -->
 
 <!-- Google Fonts -->
-<link rel="stylesheet"
-	href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic" />
 
 </head>
 <script>
-<<<<<<< HEAD
+
 	window.fbAsyncInit = function() {
-		FB.init({
-			appId : '697333240402235',
-			xfbml : true,
-			cookie : true,
-
-			version : 'v2.4'
-		});
-		var email = document.getElementById('email');
-		FB.getLoginStatus(function(response) {
-			if (response.status === 'connected') {
-				//alert("LoginStatus -------");
-				FB.api('/me?fields=id,name,email', function(user) {
-					if (user) {
-						var image = document.getElementById('image');
-						image.src = 'http://graph.facebook.com/' + user.id
-								+ '/picture';
-
-						/* var name = document.getElementById('name');
-						name.innerHTML = user.name
-						var id = document.getElementById('id');
-						console.log(user.id);
-						id.innerHTML = user.id; */
-						//var email = document.getElementById('email');
-						//var birthday = document.getElementById('birthday');
-						//console.log("user.email : " + user.email);
-						//console.log(user.birthday);
-						//email=user.email;
-						//birthday.innerHTML = user.birthday;
-						var emailVal = user.email;
-						email.innerHTML = user.email;
-						//console.log("friendList email=>" + emailVal);
-						$.get("friendlist.do", "email=" + emailVal, function(
-								resultData) {
-							$("#friendlist").html(resultData);
-						});
-
-						$.post("FBSignupLogin.do", {
-							"n_email" : user.email,
-							"n_nickname" : user.name,
-							"n_pwd" : "fb"
-						});
-						//console.log("email **** : " + user.email
-						//		+ " nickname ***  : " + user.name);
-					}
-
+		FB.init({appId : '697333240402235',
+				xfbml : true,
+				cookie : true,
+				version : 'v2.4'
 				});
-
-			} else if (response.status === 'not_authorized') {
-
-			}
-		}, {
-			scope : 'email'
-		});
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {
-				return;
-			}
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-
-		function signinCallback(authResult) {
-			if (authResult['access_token']) {
-				// 승인 성공
-				// 사용자가 승인되었으므로 로그인 버튼 숨김. 예:
-				//document.getElementById('signinButton').setAttribute('style',
-				//			'display: none');
-			} else if (authResult['error']) {
-				// 오류가 발생했습니다.
-				// 가능한 오류 코드:
-				//   "access_denied" - 사용자가 앱에 대한 액세스 거부
-				//   "immediate_failed" - 사용자가 자동으로 로그인할 수 없음
-				// console.log('오류 발생: ' + authResult['error']);
-			}
+	FB.getLoginStatus(function(response) {
+		if (response.status === 'connected') {
+			FB.api('/me?fields=id,name,email',function(user) {
+				if (user) {
+					var image = document.getElementById('image');
+					image.src = 'http://graph.facebook.com/'+ user.id + '/picture';
+					console.log("user.email : "	+ user.email);
+					var email = document.getElementById('email');
+					var emailVal = user.email;
+					$.post("fbSignupLogin.do", 
+						   {"n_email" : user.email, "n_nickname" : user.name, "n_pwd" : "fb"});
+					$.post("friendlist.do", "email="+ emailVal,	function(resultData) {
+						$("#friendlist").html(resultData);
+					});
+				}
+			});
+		} else if (response.status === 'not_authorized') {	
+			}			
+		}, {scope : 'email'});
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {
+			return;
 		}
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
 
-		(function(d) {
-			var js, id = 'facebook-jssdk', ref = d
-					.getElementsByTagName('script')[0];
-			if (d.getElementById(id)) {
-				return;
-			}
-			js = d.createElement('script');
-			js.id = id;
-			js.async = true;
-			js.src = "//connect.facebook.net/ko_KR/all.js";
-			ref.parentNode.insertBefore(js, ref);
-		}(document));
+	function signinCallback(authResult) {
+		if (authResult['access_token']) {
 
-		function showUserInfo(id) {
-			FB
-					.api(
-							{
-								method : 'fql.query',
-								query : 'SELECT name, pic_square FROM user WHERE uid='
-										+ id
-							},
-							function(response) {
-								document.getElementById('userInfo').innerHTML += ('<img src="' + response[0].pic_square + '"> ' + response[0].name);
-							});
+		} else if (authResult['error']) {
+
+		}
+	}
+
+	(function(d) {
+		var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+		if (d.getElementById(id)) {
+			return;
+		}
+		js = d.createElement('script');
+		js.id = id;
+		js.async = true;
+		js.src = "//connect.facebook.net/ko_KR/all.js";
+		ref.parentNode.insertBefore(js, ref);
+	}(document));
+
+	function showUserInfo(id) {
+		FB.api({method : 'fql.query', query : 'SELECT name, pic_square FROM user WHERE uid='+ id},
+			function(response) {document.getElementById('userInfo').innerHTML += ('<img src="' + response[0].pic_square + '"> ' + response[0].name);
+			});
 		}
 
 	};
 
-	$(document).ready(function() {
-		//menu용 a 태그를 클릭 했을 때 이벤트 처리
-		$(document).on("click", "a", function(event) { //click(function(event) {
-			event.preventDefault(); //기본 이벤트(url 요청하기) 막기
-			//alert("동작");
-			var url = $(this).prop("href");
-			//url을 get 방식 요청한  후 응답되면 successFunction함수를 호출하라
-			if (url.trim() != "") {
-				$.get(url, successFunction);
-			}
-		});
+$(document).ready(function() {
+	$.post("timelineListView.do", successFunction);
+	
+ 	$(document).on("click", "a", function(event) { 
+		event.preventDefault(); 
+		var url = $(this).prop("href");
 
-		$("#petSignUpBtn").click(function(event) {
-			event.preventDefault();
-			var petName = $("#petName").val();
-			var email2 = email;
-
-			var animalCode = $("#animalName").val();
-			var gender = $(":input:radio[name=gender]:checked").val();
-			var image = $("#imagePath").val();
-			var birthdate = $("#birthdate").val();
-			console.log(petName);
-			console.log(animalCode);
-			console.log(image);
-			$.post("addpet.do", {
-				"petName" : petName,
-				"animalCode" : animalCode,
-				"gender" : gender,
-				"image" : image,
-				"birthdate" : birthdate
-
-			});
-			alert("pet 등록");
+		if (url.trim() != "") {
+			$.get(url, successFunction);
+		}
+	}); 
+	
+	$("#search").submit(function(event) {
+		event.preventDefault();
+		$.post("friendsearch.do", $(this).serialize(), successFunction);
 		});
 	
+	
+	$("#petSignUpBtn").click(function(event) {
+		event.preventDefault();
+		var petName = $("#petName").val();
+		var animalCode = $("#animalName").val();
+		var gender = $(":input:radio[name=gender]:checked").val();
+		var image = $("#imagePath").val();
+		var birthdate = $("#birthdate").val();
+		console.log(petName);
+		console.log(animalCode);
+		console.log(image);
+		$.post("addpet.do", {
+			"petName" : petName,
+			"animalCode" : animalCode,
+			"gender" : gender,
+			"image" : image,
+			"birthdate" : birthdate
 
+		});
+		alert("pet 등록");
 	});
-
+});
 	
 	function successFunction(responseData) {
 		$("#aaa").html(responseData);
-	}
-=======
-	/* $(document).ready(function(user) {
-	 //alert("test");
-	 //var emailVal=$("#email").html();
-	 var emailVal = user.email;
-	 console.log("email2134="+emailVal);
-	 $.get("friendlist.do", {"email": emailVal} , function(resultData) {
-	 $("#friendlist").html(resultData);
-	 });
-	 }); */
-
-	$(document)
-			.ready(
-					function() {
-						window.fbAsyncInit = function() {
-							FB.init({
-								appId : '697333240402235',
-								xfbml : true,
-								cookie : true,
-
-								version : 'v2.4'
-							});
-
-							FB
-									.getLoginStatus(
-											function(response) {
-												if (response.status === 'connected') {
-													//alert("LoginStatus -------");
-													FB
-															.api(
-																	'/me?fields=id,name,email',
-																	function(
-																			user) {
-																		if (user) {
-																			var image = document
-																					.getElementById('image');
-																			image.src = 'http://graph.facebook.com/'
-																					+ user.id
-																					+ '/picture';
-																			/* var name = document.getElementById('name');
-																			name.innerHTML = user.name
-																			var id = document.getElementById('id');
-																			console.log(user.id);
-																			id.innerHTML = user.id; */
-																			//var email = document.getElementById('email');
-																			//var birthday = document.getElementById('birthday');
-																			console
-																					.log("user.email : "
-																							+ user.email);
-																			//console.log(user.birthday);
-																			//email=user.email;
-																			var email = document
-																					.getElementById('email');
-																			// email.innerHTML = user.email;
-																			//birthday.innerHTML = user.birthday;
-
-																			var emailVal = user.email;
-																			console.log("friendList email=>"
-																							+ emailVal);
-
-																			$.post(
-																							"fbSignupLogin.do",
-																							{
-																								"n_email" : user.email,
-																								"n_nickname" : user.name,
-																								"n_pwd" : "fb"
-																							});
-																			console.log("email **** : "
-																							+ user.email
-																							+ " nickname ***  : "
-																							+ user.name);
-
-																			$.post("friendlist.do", "email="+ emailVal,
-																							function(resultData) {
-																								$("#friendlist").html(resultData);
-																							});
-
-																		}
-																	});
-
-												} else if (response.status === 'not_authorized') {
-
-												}
-											}, {
-												scope : 'email'
-											});
-							(function(d, s, id) {
-								var js, fjs = d.getElementsByTagName(s)[0];
-								if (d.getElementById(id)) {
-									return;
-								}
-								js = d.createElement(s);
-								js.id = id;
-								js.src = "//connect.facebook.net/en_US/sdk.js";
-								fjs.parentNode.insertBefore(js, fjs);
-							}(document, 'script', 'facebook-jssdk'));
-
-							function signinCallback(authResult) {
-								if (authResult['access_token']) {
-									// 승인 성공
-									// 사용자가 승인되었으므로 로그인 버튼 숨김. 예:
-									//document.getElementById('signinButton').setAttribute('style',
-									//			'display: none');
-								} else if (authResult['error']) {
-									// 오류가 발생했습니다.
-									// 가능한 오류 코드:
-									//   "access_denied" - 사용자가 앱에 대한 액세스 거부
-									//   "immediate_failed" - 사용자가 자동으로 로그인할 수 없음
-									// console.log('오류 발생: ' + authResult['error']);
-								}
-							}
-
-							(function(d) {
-								var js, id = 'facebook-jssdk', ref = d
-										.getElementsByTagName('script')[0];
-								if (d.getElementById(id)) {
-									return;
-								}
-								js = d.createElement('script');
-								js.id = id;
-								js.async = true;
-								js.src = "//connect.facebook.net/ko_KR/all.js";
-								ref.parentNode.insertBefore(js, ref);
-							}(document));
-
-							function showUserInfo(id) {
-								FB
-										.api(
-												{
-													method : 'fql.query',
-													query : 'SELECT name, pic_square FROM user WHERE uid='
-															+ id
-												},
-												function(response) {
-													document
-															.getElementById('userInfo').innerHTML += ('<img src="' + response[0].pic_square + '"> ' + response[0].name);
-
-												});
-							}
-
-						};
-
-						//menu용 a 태그를 클릭 했을 때 이벤트 처리
-						$(document).on("click", "a", function(event) { //click(function(event) {
-							event.preventDefault(); //기본 이벤트(url 요청하기) 막기
-							//alert("동작");
-							var url = $(this).prop("href");
-							//url을 get 방식 요청한  후 응답되면 successFunction함수를 호출하라
-
-							if (url.trim() != "") {
-								$.get(url, successFunction);
-							}
-						});
-						
-						$("#search").submit(
-								function(event) {
-									event.preventDefault();
-									$.post("friendsearch.do", $(this).serialize(),
-											successFunction);
-
-								});
-
-					});
-	function successFunction(responseData) {
-		$("#aaa").html(responseData);
-	}
+	};
 	
-	
-	
-	
->>>>>>> master
+
 </script>
 
 <body data-spy="scroll" data-target="#navbar-scroll">
@@ -412,42 +186,26 @@
 							<button type="submit" >Submit</button>
 						</form> 
 					<ul class="nav navbar-nav">
+						<li><a href="timelineListView.do">타임라인</a></li>
 						<li><a href="boardlistview.do">지식in</a></li>
 						<li><a href="#download"></a></li>
 					</ul>
 				</div>
 				<ul class="nav navbar-nav navbar-right">
-<<<<<<< HEAD
-
 					<li><img id="image"></li>
-					<!-- <li> <div id="id"></div></li> -->
-					<!-- <li> <div id="name"></div></li> -->
-					<li>
-						<div id="email"></div>
-					</li>
-					<%-- <li><i>${sessionScope.loginInfo.e_mail}</i> --%>
-					<li class="dropdown">
-						<p class="dropdown-toggle" data-toggle="dropdown" role="button"
-							aria-haspopup="true" aria-expanded="false">
-							회원정보 <span class="caret"></span>
-						</p>
 
-						<ul class="dropdown-menu">
-							<li><a data-toggle="modal" data-target="#myModal">Pet등록</a></li>
-							<li><a href="viewpet.do">나의 Pet 보기</a></li>
-=======
-					<li><img id="image"></li>
 					<!-- <li> <div id="id"></div></li> -->
 					<!-- <li> <div id="name"></div></li> -->
 					<!-- <li> <div id="email"></div></li> -->
 					<li>
 						<div>${sessionScope.loginInfo.e_mail}</div>
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">회원정보 <span class="caret"></span></a>
+
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">회원정보 
+						<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="AddPet.jsp">Pet등록</a></li>
->>>>>>> master
+							<li><a data-toggle="modal" data-target="#myModal">Pet등록</a></li>
+							<li><a href="viewpet.do">나의 Pet 보기</a></li>
 							<li><a href="#">회원정보 수정</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="logout.do">Logout</a></li>
@@ -457,19 +215,11 @@
 			</div>
 		</nav>
 	</div>
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 
 
-
-	<div id="article" class="row">
+	<div class="row">
 		<div class="col-sm-8 blog-main">
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 			<div class="blog-post">
 				<!-- <h2 class="blog-post-title">Timeline 노출되는 부분</h2> -->
 				<div id="aaa">
@@ -480,14 +230,13 @@
 						<!-- <div id="email"></div> -->
 						<div id="birthday"></div>
 
+
 					</div>
-<<<<<<< HEAD
-=======
 					<%-- <jsp:include page="searchFriendResult.jsp" /> --%>
->>>>>>> master
 				</div>
 			</div>
 		</div>
+
 		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
 			<div class="sidebar-module sidebar-module-inset">
 				<h4>Side Bar 노출 부분</h4>
@@ -499,48 +248,27 @@
 			</div>
 			<div class="sidebar-module">
 				<h4>Friends List</h4>
+				<div id="friendlist">
 
-<<<<<<< HEAD
-				<ol class="list-unstyled">
 
-=======
-				<ol class="list-unstyled" id="friendlist">
->>>>>>> master
+				<!-- <ol class="list-unstyled" id="friendlist"> -->
 					<!-- <li><a href="#">Noh heeseok</a></li> -->
 					<!-- <li><a href="#">Pack gyerae</a></li> -->
 					<jsp:include page="friendlistResult.jsp" />
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
+				<!-- </ol> -->
+				</div>
+			</div>
+			<div class="sidebar-module">
+				<h4>Elsewhere</h4>
+				<ol class="list-unstyled">
+					<li><a href="#">GitHub</a></li>
+					<li><a href="#">Twitter</a></li>
+					<li><a href="#">Facebook</a></li>
 				</ol>
 			</div>
 		</div>
 	</div>
-<<<<<<< HEAD
-	<!-- 	
-	
-	<div class="modal-dialog" id="kindSearchPopup" role="dialog">
-	
-	<div class="modal-dialog">
-	 
-	<div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	
-	<div class="modal-body">
-	
-	등록해주세요!
-	
-	
-	</div>
-	
-	
-	</div>
-	
-	</div> -->
-	<!-- </div> -->
-
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
@@ -595,8 +323,7 @@
 							<!-- <div class="col-lg-6"></div> -->
 							<p>
 								프로필 사진 <input id="imagePath" name="image" type="file"
-									value="이미지 등록" /> <input name="imageConfirm" type="image"
-									value="등록">
+									value="이미지 등록" />
 							</p>
 
 
@@ -622,10 +349,7 @@
 		</div>
 	</div>
 
-=======
-
-
->>>>>>> master
+	
 	<!-- /.footer -->
 	<footer id="footer">
 		<div class="container">
@@ -653,8 +377,8 @@
 	</footer>
 
 	<!-- /.javascript files -->
-	<!-- <script src="js/jquery.js"></script> -->
-	<!-- <script src="js/bootstrap.min.js"></script> -->
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/jquery.sticky.js"></script>
 	<script src="js/wow.min.js"></script>
